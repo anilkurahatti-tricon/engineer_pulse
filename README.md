@@ -19,8 +19,26 @@ over time. No authentication/authorization is implemented yet.
 
 ```
 engineer_pulse/
-  backend/     # FastAPI app (controllers, business, dataservice, ai, core)
-  frontend/    # React app (pages, business hooks, dataservice/api client)
+├── backend/                          # FastAPI, Python
+│   ├── app/
+│   │   ├── controllers/              # API layer: demo, employee_feedback, employee_skills, chatbot
+│   │   ├── business/                 # service layer (one service per controller)
+│   │   ├── dataservice/              # in-memory "repositories" with seeded dummy data
+│   │   ├── models/                   # Pydantic schemas
+│   │   ├── ai/ai_client.py           # pluggable OpenAI/Azure OpenAI client, extracts keys from .env
+│   │   ├── core/config.py            # Settings (reads .env)
+│   │   └── main.py                   # app entrypoint, Swagger at /docs, CORS open
+│   ├── requirements.txt              # fastapi, uvicorn, pydantic-settings, openai, tiktoken, pytest, httpx
+│   ├── .env.example
+│   └── README.md
+├── frontend/                         # React (Vite)
+│   └── src/
+│       ├── dataservice/              # axios clients per controller
+│       ├── business/                 # hooks wrapping data-service + state
+│       ├── pages/                    # DemoPage, EmployeeFeedbackPage, EmployeeSkillsPage, ChatbotPage
+│       └── components/NavBar.jsx
+├── .gitignore                        # merged Python + Node + .env rules
+└── README.md
 ```
 
 See [backend/README.md](backend/README.md) and [frontend/README.md](frontend/README.md)
