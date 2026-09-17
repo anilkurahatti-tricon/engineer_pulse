@@ -216,3 +216,20 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# ---------------------------------------------------------------------------
+# Node / React (frontend)
+# ---------------------------------------------------------------------------
+node_modules/
+dist/
+dist-ssr/
+*.local
+.eslintcache
+frontend/.env
+frontend/.env.local
+
+# ---------------------------------------------------------------------------
+# Backend environment files (never commit real API keys)
+# ---------------------------------------------------------------------------
+backend/.env
+
