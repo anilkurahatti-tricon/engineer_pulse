@@ -9,7 +9,7 @@ over time. No authentication/authorization is implemented yet.
 
 ## Tech stack
 
-- Frontend: React (Vite)
+- Frontend: React (Vite), Material UI, MUI Icons, Recharts
 - Backend: Python, FastAPI, Swagger/OpenAPI docs enabled at `/docs`
 - Data: in-memory dummy stores for now, isolated behind a `dataservice` layer
   so a real database can be swapped in later without touching business logic
@@ -36,7 +36,8 @@ engineer_pulse/
 │       ├── dataservice/              # axios clients per controller
 │       ├── business/                 # hooks wrapping data-service + state
 │       ├── pages/                    # DemoPage, EmployeeFeedbackPage, EmployeeSkillsPage, ChatbotPage
-│       └── components/NavBar.jsx
+│       ├── components/               # NavBar, Recharts visualizations
+│       └── theme.js                  # Material UI theme
 ├── .gitignore                        # merged Python + Node + .env rules
 └── README.md
 ```
