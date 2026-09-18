@@ -1,26 +1,49 @@
+import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
+import ChatIcon from "@mui/icons-material/Chat";
+import HomeIcon from "@mui/icons-material/Home";
+import RateReviewIcon from "@mui/icons-material/RateReview";
+import ScienceIcon from "@mui/icons-material/Science";
+import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import { NavLink } from "react-router-dom";
 
-const linkClass = ({ isActive }) => (isActive ? "nav-link nav-link-active" : "nav-link");
+const links = [
+  { to: "/", label: "Welcome", icon: <HomeIcon fontSize="small" />, end: true },
+  { to: "/demo", label: "Demo", icon: <ScienceIcon fontSize="small" /> },
+  { to: "/employee-feedback", label: "Employee Feedback", icon: <RateReviewIcon fontSize="small" /> },
+  { to: "/employee-skills", label: "Employee Skills", icon: <WorkspacePremiumIcon fontSize="small" /> },
+  { to: "/chatbot", label: "Chatbot", icon: <ChatIcon fontSize="small" /> },
+];
 
 export default function NavBar() {
   return (
-    <nav className="navbar">
-      <span className="navbar-brand">Engineer Pulse</span>
-      <NavLink to="/" end className={linkClass}>
-        Welcome
-      </NavLink>
-      <NavLink to="/demo" className={linkClass}>
-        Demo
-      </NavLink>
-      <NavLink to="/employee-feedback" className={linkClass}>
-        Employee Feedback
-      </NavLink>
-      <NavLink to="/employee-skills" className={linkClass}>
-        Employee Skills
-      </NavLink>
-      <NavLink to="/chatbot" className={linkClass}>
-        Chatbot
-      </NavLink>
-    </nav>
+    <AppBar position="sticky">
+      <Toolbar sx={{ gap: 1, flexWrap: "wrap" }}>
+        <Typography variant="h6" sx={{ mr: 2, fontWeight: 700 }}>
+          Engineer Pulse
+        </Typography>
+        <Box sx={{ display: "flex", gap: 0.5, flexWrap: "wrap" }}>
+          {links.map((link) => (
+            <Button
+              key={link.to}
+              component={NavLink}
+              to={link.to}
+              end={link.end}
+              color="inherit"
+              variant="text"
+              startIcon={link.icon}
+              sx={{
+                "&.active": {
+                  fontWeight: 700,
+                  borderBottom: "2px solid currentColor",
+                  borderRadius: 0,
+                },
+              }}
+            >
+              {link.label}
+            </Button>
+          ))}
+        </Box>
+      </Toolbar>
+    </AppBar>
   );
 }

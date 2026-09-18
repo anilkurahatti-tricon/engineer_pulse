@@ -1,4 +1,19 @@
 import { useState } from "react";
+import {
+  Alert,
+  Button,
+  LinearProgress,
+  Paper,
+  Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  TextField,
+  Typography,
+} from "@mui/material";
+import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import { useDemoItems } from "../business/useDemoItems";
 
 export default function DemoPage() {
@@ -15,29 +30,65 @@ export default function DemoPage() {
   };
 
   return (
-    <section>
-      <h1>Demo (CRUD sanity check)</h1>
-      <form onSubmit={handleSubmit} className="form-row">
-        <input placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
-        <input
-          placeholder="Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-        <button type="submit">Add</button>
-      </form>
+    <Stack spacing={3}>
+      <Typography variant="h4" component="h1">
+        Demo (CRUD sanity check)
+      </Typography>
 
-      {loading && <p>Loading...</p>}
-      {error && <p className="error">{error}</p>}
+      <Paper component="form" onSubmit={handleSubmit} sx={{ p: 2 }}>
+        <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
+          <TextField
+            label="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            fullWidth
+          />
+          <TextField
+            label="Description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+            fullWidth
+          />
+          <Button type="submit" sx={{ whiteSpace: "nowrap" }}>
+            Add
+          </Button>
+        </Stack>
+      </Paper>
 
-      <ul className="item-list">
-        {items.map((item) => (
-          <li key={item.id}>
-            <strong>{item.name}</strong> - {item.description}
-            <button onClick={() => deleteItem(item.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
-    </section>
+      {loading && <LinearProgress />}
+      {error && <Alert severity="error">{error}</Alert>}
+
+      <Paper sx={{ overflow: "auto" }}>
+        <Table size="small">
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell>Description</TableCell>
+              <TableCell align="right">Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {items.map((item) => (
+              <TableRow key={item.id}>
+                <TableCell>{item.name}</TableCell>
+                <TableCell>{item.description}</TableCell>
+                <TableCell align="right">
+                  <Button
+                    color="error"
+                    variant="text"
+                    startIcon={<DeleteOutlinedIcon />}
+                    onClick={() => deleteItem(item.id)}
+                  >
+                    Delete
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Paper>
+    </Stack>
   );
 }

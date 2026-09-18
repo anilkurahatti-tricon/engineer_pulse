@@ -1,4 +1,15 @@
 import { useState } from "react";
+import {
+  Alert,
+  Box,
+  Button,
+  CircularProgress,
+  Paper,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
+import SendIcon from "@mui/icons-material/Send";
 import { useChatbot } from "../business/useChatbot";
 
 export default function ChatbotPage() {
@@ -14,27 +25,70 @@ export default function ChatbotPage() {
   };
 
   return (
-    <section>
-      <h1>Chatbot</h1>
-      <div className="chat-window">
-        {messages.map((m, idx) => (
-          <p key={idx} className={m.sender === "user" ? "chat-user" : "chat-bot"}>
-            <strong>{m.sender === "user" ? "You" : "Bot"}:</strong> {m.message}
-          </p>
-        ))}
-      </div>
+    <Stack spacing={2}>
+      <Typography variant="h4" component="h1">
+        Chatbot
+      </Typography>
 
-      {loading && <p>Thinking...</p>}
-      {error && <p className="error">{error}</p>}
+      <Paper
+        sx={{
+          minHeight: 280,
+          maxHeight: 480,
+          overflow: "auto",
+          p: 2,
+          display: "flex",
+          flexDirection: "column",
+          gap: 1.5,
+        }}
+      >
+        {messages.length === 0 && (
+          <Typography color="text.secondary">
+            Ask a question about the team, skills, or feedback.
+          </Typography>
+        )}
+        {messages.map((message, idx) => {
+          const isUser = message.sender === "user";
+          return (
+            <Box key={idx} sx={{ display: "flex", justifyContent: isUser ? "flex-end" : "flex-start" }}>
+              <Paper
+                elevation={0}
+                sx={{
+                  px: 1.5,
+                  py: 1,
+                  maxWidth: "80%",
+                  bgcolor: isUser ? "primary.main" : "background.default",
+                  color: isUser ? "primary.contrastText" : "text.primary",
+                }}
+              >
+                <Typography variant="caption" sx={{ display: "block", opacity: 0.8 }}>
+                  {isUser ? "You" : "Bot"}
+                </Typography>
+                <Typography variant="body2">{message.message}</Typography>
+              </Paper>
+            </Box>
+          );
+        })}
+      </Paper>
 
-      <form onSubmit={handleSubmit} className="form-row">
-        <input
+      {loading && (
+        <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
+          <CircularProgress size={18} />
+          <Typography variant="body2">Thinking...</Typography>
+        </Stack>
+      )}
+      {error && <Alert severity="error">{error}</Alert>}
+
+      <Stack component="form" onSubmit={handleSubmit} direction="row" spacing={1}>
+        <TextField
+          fullWidth
           placeholder="Ask the chatbot..."
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
-        <button type="submit">Send</button>
-      </form>
-    </section>
+        <Button type="submit" endIcon={<SendIcon />} disabled={loading}>
+          Send
+        </Button>
+      </Stack>
+    </Stack>
   );
 }
