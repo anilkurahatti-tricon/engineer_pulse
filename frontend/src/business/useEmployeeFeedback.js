@@ -2,9 +2,16 @@
 import { useCallback, useEffect, useState } from "react";
 import { employeeFeedbackDataService } from "../dataservice/employeeFeedbackDataService";
 
+function toErrorMessage(err) {
+  const detail = err.response?.data?.detail;
+  if (typeof detail === "string") return detail;
+  return err.message || "Request failed";
+}
+
 export function useEmployeeFeedback() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
 
   const refresh = useCallback(async () => {
@@ -13,7 +20,7 @@ export function useEmployeeFeedback() {
     try {
       setItems(await employeeFeedbackDataService.getAll());
     } catch (err) {
-      setError(err.message);
+      setError(toErrorMessage(err));
     } finally {
       setLoading(false);
     }
@@ -23,13 +30,20 @@ export function useEmployeeFeedback() {
     refresh();
   }, [refresh]);
 
-  const createItem = useCallback(
-    async (payload) => {
-      await employeeFeedbackDataService.create(payload);
-      await refresh();
-    },
-    [refresh]
-  );
+  const createItem = useCallback(async (payload) => {
+    setSubmitting(true);
+    setError(null);
+    try {
+      const created = await employeeFeedbackDataService.create(payload);
+      setItems(await employeeFeedbackDataService.getAll());
+      return created;
+    } catch (err) {
+      setError(toErrorMessage(err));
+      throw err;
+    } finally {
+      setSubmitting(false);
+    }
+  }, []);
 
   const deleteItem = useCallback(
     async (id) => {
@@ -39,5 +53,5 @@ export function useEmployeeFeedback() {
     [refresh]
   );
 
-  return { items, loading, error, refresh, createItem, deleteItem };
+  return { items, loading, submitting, error, refresh, createItem, deleteItem };
 }

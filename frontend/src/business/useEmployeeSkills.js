@@ -2,9 +2,16 @@
 import { useCallback, useEffect, useState } from "react";
 import { employeeSkillsDataService } from "../dataservice/employeeSkillsDataService";
 
+function toErrorMessage(err) {
+  const detail = err.response?.data?.detail;
+  if (typeof detail === "string") return detail;
+  return err.message || "Request failed";
+}
+
 export function useEmployeeSkills() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
 
   const refresh = useCallback(async () => {
@@ -13,7 +20,7 @@ export function useEmployeeSkills() {
     try {
       setItems(await employeeSkillsDataService.getAll());
     } catch (err) {
-      setError(err.message);
+      setError(toErrorMessage(err));
     } finally {
       setLoading(false);
     }
@@ -23,13 +30,21 @@ export function useEmployeeSkills() {
     refresh();
   }, [refresh]);
 
-  const createItem = useCallback(
-    async (payload) => {
-      await employeeSkillsDataService.create(payload);
-      await refresh();
-    },
-    [refresh]
-  );
+  const createItems = useCallback(async (payloads) => {
+    setSubmitting(true);
+    setError(null);
+    try {
+      for (const payload of payloads) {
+        await employeeSkillsDataService.create(payload);
+      }
+      setItems(await employeeSkillsDataService.getAll());
+    } catch (err) {
+      setError(toErrorMessage(err));
+      throw err;
+    } finally {
+      setSubmitting(false);
+    }
+  }, []);
 
   const deleteItem = useCallback(
     async (id) => {
@@ -39,5 +54,5 @@ export function useEmployeeSkills() {
     [refresh]
   );
 
-  return { items, loading, error, refresh, createItem, deleteItem };
+  return { items, loading, submitting, error, refresh, createItems, deleteItem };
 }

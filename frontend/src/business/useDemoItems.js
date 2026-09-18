@@ -1,11 +1,17 @@
-// Business layer: React hook wrapping the Demo data-service with local
-// state and simple CRUD orchestration used by the presentation layer.
+// Business layer: React hook wrapping the Demo data-service.
 import { useCallback, useEffect, useState } from "react";
 import { demoDataService } from "../dataservice/demoDataService";
+
+function toErrorMessage(err) {
+  const detail = err.response?.data?.detail;
+  if (typeof detail === "string") return detail;
+  return err.message || "Request failed";
+}
 
 export function useDemoItems() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
 
   const refresh = useCallback(async () => {
@@ -14,7 +20,7 @@ export function useDemoItems() {
     try {
       setItems(await demoDataService.getAll());
     } catch (err) {
-      setError(err.message);
+      setError(toErrorMessage(err));
     } finally {
       setLoading(false);
     }
@@ -24,13 +30,20 @@ export function useDemoItems() {
     refresh();
   }, [refresh]);
 
-  const createItem = useCallback(
-    async (payload) => {
-      await demoDataService.create(payload);
-      await refresh();
-    },
-    [refresh]
-  );
+  const createItem = useCallback(async (payload) => {
+    setSubmitting(true);
+    setError(null);
+    try {
+      const created = await demoDataService.create(payload);
+      setItems(await demoDataService.getAll());
+      return created;
+    } catch (err) {
+      setError(toErrorMessage(err));
+      throw err;
+    } finally {
+      setSubmitting(false);
+    }
+  }, []);
 
   const deleteItem = useCallback(
     async (id) => {
@@ -40,5 +53,5 @@ export function useDemoItems() {
     [refresh]
   );
 
-  return { items, loading, error, refresh, createItem, deleteItem };
+  return { items, loading, submitting, error, refresh, createItem, deleteItem };
 }

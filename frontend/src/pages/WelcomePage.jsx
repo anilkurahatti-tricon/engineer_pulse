@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { useWelcome } from "../business/useWelcome";
 
 const FALLBACK_FEATURES = [
-  { title: "Employee Feedback", description: "Capture and review feedback for every engineer.", path: "/employee-feedback" },
+  { title: "Feedback", description: "Capture and review feedback for every engineer.", path: "/employee-feedback" },
   { title: "Employee Skills", description: "Track skills and proficiency levels across the team.", path: "/employee-skills" },
   { title: "AI Chatbot", description: "Ask questions and get AI-assisted answers.", path: "/chatbot" },
   { title: "Demo Sandbox", description: "Full CRUD playground used to validate the layered setup.", path: "/demo" },
@@ -30,12 +30,9 @@ export default function WelcomePage() {
         <Typography variant="h4" component="h1" gutterBottom>
           {info?.app_name || "Engineer Pulse"}
         </Typography>
-        <Typography variant="subtitle1" color="text.secondary" gutterBottom>
+        <Typography variant="subtitle1" color="text.secondary">
           {info?.tagline || "Understand, support, and grow your engineering team."}
         </Typography>
-        {info?.description && (
-          <Typography color="text.secondary">{info.description}</Typography>
-        )}
       </Box>
 
       {loading && <CircularProgress />}
@@ -50,19 +47,16 @@ export default function WelcomePage() {
         }}
       >
         {features.map((feature) => (
-          <Card
-            key={feature.title}
-            sx={{ bgcolor: "#f8fafc", color: "#1f2933" }}
-          >
+          <Card key={feature.title}>
             <CardActionArea component={Link} to={feature.path} sx={{ height: "100%" }}>
               <CardContent>
                 <Stack direction="row" spacing={1} sx={{ mb: 1, alignItems: "center" }}>
                   {FEATURE_ICONS[feature.path] || <ScienceIcon color="primary" />}
-                  <Typography variant="h6" component="h2" sx={{ color: "#1f2933" }}>
+                  <Typography variant="h6" component="h2">
                     {feature.title}
                   </Typography>
                 </Stack>
-                <Typography variant="body2" sx={{ color: "#52606d" }}>
+                <Typography variant="body2" color="text.secondary">
                   {feature.description}
                 </Typography>
               </CardContent>
