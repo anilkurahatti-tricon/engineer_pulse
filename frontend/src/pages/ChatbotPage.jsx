@@ -16,35 +16,37 @@ export default function ChatbotPage() {
   const { messages, loading, error, sendMessage } = useChatbot();
   const [text, setText] = useState("");
 
+  const handleCancel = () => {
+    setText("");
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (!text) return;
-    const toSend = text;
+    if (!text.trim()) return;
+    const toSend = text.trim();
     setText("");
     await sendMessage(toSend);
   };
 
   return (
-    <Stack spacing={2}>
+    <Stack spacing={3}>
       <Typography variant="h4" component="h1">
         Chatbot
       </Typography>
 
       <Paper
         sx={{
-          minHeight: 280,
+          minHeight: 320,
           maxHeight: 480,
           overflow: "auto",
-          p: 2,
+          p: { xs: 2, sm: 3 },
           display: "flex",
           flexDirection: "column",
           gap: 1.5,
         }}
       >
         {messages.length === 0 && (
-          <Typography color="text.secondary">
-            Ask a question about the team, skills, or feedback.
-          </Typography>
+          <Typography color="text.secondary">Ask a question in plain text.</Typography>
         )}
         {messages.map((message, idx) => {
           const isUser = message.sender === "user";
@@ -63,7 +65,9 @@ export default function ChatbotPage() {
                 <Typography variant="caption" sx={{ display: "block", opacity: 0.8 }}>
                   {isUser ? "You" : "Bot"}
                 </Typography>
-                <Typography variant="body2">{message.message}</Typography>
+                <Typography variant="body2" sx={{ whiteSpace: "pre-wrap" }}>
+                  {message.message}
+                </Typography>
               </Paper>
             </Box>
           );
@@ -78,17 +82,27 @@ export default function ChatbotPage() {
       )}
       {error && <Alert severity="error">{error}</Alert>}
 
-      <Stack component="form" onSubmit={handleSubmit} direction="row" spacing={1}>
-        <TextField
-          fullWidth
-          placeholder="Ask the chatbot..."
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-        />
-        <Button type="submit" endIcon={<SendIcon />} disabled={loading}>
-          Send
-        </Button>
-      </Stack>
+      <Paper component="form" onSubmit={handleSubmit} sx={{ p: { xs: 2, sm: 3 } }}>
+        <Stack spacing={2}>
+          <TextField
+            label="Message"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            fullWidth
+            multiline
+            minRows={3}
+            placeholder="Write your question in plain text..."
+          />
+          <Stack direction="row" spacing={1} sx={{ justifyContent: "flex-end" }}>
+            <Button type="button" variant="outlined" onClick={handleCancel} disabled={loading}>
+              Cancel
+            </Button>
+            <Button type="submit" endIcon={<SendIcon />} disabled={loading || !text.trim()}>
+              Submit
+            </Button>
+          </Stack>
+        </Stack>
+      </Paper>
     </Stack>
   );
 }

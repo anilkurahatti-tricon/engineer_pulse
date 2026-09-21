@@ -8,20 +8,20 @@ import { NavLink } from "react-router-dom";
 
 const links = [
   { to: "/", label: "Welcome", icon: <HomeIcon fontSize="small" />, end: true },
-  { to: "/demo", label: "Demo", icon: <ScienceIcon fontSize="small" /> },
-  { to: "/employee-feedback", label: "Employee Feedback", icon: <RateReviewIcon fontSize="small" /> },
+  { to: "/employee-feedback", label: "Feedback", icon: <RateReviewIcon fontSize="small" /> },
   { to: "/employee-skills", label: "Employee Skills", icon: <WorkspacePremiumIcon fontSize="small" /> },
   { to: "/chatbot", label: "Chatbot", icon: <ChatIcon fontSize="small" /> },
+  { to: "/demo", label: "Demo", icon: <ScienceIcon fontSize="small" /> },
 ];
 
 export default function NavBar() {
   return (
-    <AppBar position="sticky">
+    <AppBar position="sticky" component="header">
       <Toolbar sx={{ gap: 1, flexWrap: "wrap" }}>
         <Typography variant="h6" sx={{ mr: 2, fontWeight: 700 }}>
           Engineer Pulse
         </Typography>
-        <Box sx={{ display: "flex", gap: 0.5, flexWrap: "wrap" }}>
+        <Box component="nav" sx={{ display: "flex", gap: 0.5, flexWrap: "wrap" }}>
           {links.map((link) => (
             <Button
               key={link.to}
