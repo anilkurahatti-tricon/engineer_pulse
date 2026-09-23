@@ -7,6 +7,7 @@ from pydantic import BaseModel, Field
 class EmployeeFeedbackBase(BaseModel):
     employee_id: int = Field(..., examples=[101])
     employee_name: str = Field(..., examples=["Jane Doe"])
+    reviewer_name: str = Field(..., examples=["John Manager"])
     feedback_text: str = Field(..., examples=["Great collaboration on the sprint."])
     rating: int = Field(..., ge=1, le=5, examples=[4])
 
@@ -17,6 +18,7 @@ class EmployeeFeedbackCreate(EmployeeFeedbackBase):
 
 class EmployeeFeedbackUpdate(BaseModel):
     employee_name: str | None = None
+    reviewer_name: str | None = None
     feedback_text: str | None = None
     rating: int | None = Field(default=None, ge=1, le=5)
 

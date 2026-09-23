@@ -26,6 +26,7 @@ import ConfirmDialog from "../components/ConfirmDialog";
 const EMPTY_FORM = {
   employeeId: "",
   employeeName: "",
+  reviewerName: "",
   feedbackText: "",
   rating: 5,
 };
@@ -38,7 +39,7 @@ export default function EmployeeFeedbackPage() {
   const [confirm, setConfirm] = useState(null);
 
   const isFormDirty =
-    Boolean(form.employeeId) || Boolean(form.employeeName.trim()) || Boolean(form.feedbackText.trim());
+    Boolean(form.employeeId) || Boolean(form.employeeName.trim()) || Boolean(form.reviewerName.trim()) || Boolean(form.feedbackText.trim());
 
   const average =
     items.length === 0
@@ -53,7 +54,7 @@ export default function EmployeeFeedbackPage() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (!form.employeeId || !form.employeeName.trim() || !form.feedbackText.trim()) return;
+    if (!form.employeeId || !form.employeeName.trim() || !form.reviewerName.trim() || !form.feedbackText.trim()) return;
     setConfirm({ type: "submit" });
   };
 
@@ -82,6 +83,7 @@ export default function EmployeeFeedbackPage() {
       await createItem({
         employee_id: Number(form.employeeId),
         employee_name: form.employeeName.trim(),
+        reviewer_name: form.reviewerName.trim(),
         feedback_text: form.feedbackText.trim(),
         rating: Number(form.rating),
       });
@@ -118,6 +120,15 @@ export default function EmployeeFeedbackPage() {
               fullWidth
             />
           </Stack>
+
+          <TextField
+            label="Reviewer name"
+            value={form.reviewerName}
+            onChange={(e) => setForm((prev) => ({ ...prev, reviewerName: e.target.value }))}
+            required
+            fullWidth
+            placeholder="Name of the person giving feedback"
+          />
 
           <TextField
             label="Feedback"
