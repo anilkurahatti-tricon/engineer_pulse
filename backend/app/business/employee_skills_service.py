@@ -1,8 +1,9 @@
 """Business logic layer for the Employee Skills controller."""
-from app.dataservice.employee_skills_repository import (
-    EmployeeSkillsRepository,
-    employee_skills_repository,
-)
+from fastapi import Depends
+from sqlalchemy.orm import Session
+
+from app.core.database import get_db
+from app.dataservice.employee_skills_repository import EmployeeSkillsRepository
 from app.models.employee_skills import (
     EmployeeSkill,
     EmployeeSkillCreate,
@@ -32,6 +33,7 @@ class EmployeeSkillsService:
         return self._repository.delete(item_id)
 
 
-def get_employee_skills_service() -> EmployeeSkillsService:
+def get_employee_skills_service(db: Session = Depends(get_db)) -> EmployeeSkillsService:
     """FastAPI dependency factory for `EmployeeSkillsService`."""
-    return EmployeeSkillsService(employee_skills_repository)
+    repository = EmployeeSkillsRepository(db)
+    return EmployeeSkillsService(repository)

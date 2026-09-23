@@ -26,6 +26,12 @@ pip install -r requirements.txt
 copy .env.example .env
 ```
 
+**Database Setup**:
+1. Get the `DATABASE_URL` for the shared Supabase project from your squad lead.
+2. Open `.env` and set `DATABASE_URL=postgresql+psycopg2://...`
+3. You do **NOT** need to run any database migration scripts — the database is centralized in the cloud and already configured.
+
+**AI Provider Setup**:
 Fill in `OPENAI_API_KEY` (or Azure OpenAI settings) in `.env` if you want real
 AI responses from the chatbot's `/api/chatbot/ask` endpoint. Without a key it
 returns a deterministic dummy response so the app still runs end-to-end.

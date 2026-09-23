@@ -1,0 +1,27 @@
+# Local PostgreSQL + pgvector container for development
+# Start:  docker compose up -d
+# Stop:   docker compose down
+# Reset:  docker compose down -v   (⚠️ deletes all data)
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: engineer_pulse_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: engineer_pulse
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d engineer_pulse"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
+    driver: local
