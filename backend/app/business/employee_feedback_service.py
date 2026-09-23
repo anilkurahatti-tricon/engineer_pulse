@@ -1,8 +1,9 @@
 """Business logic layer for the Employee Feedback controller."""
-from app.dataservice.employee_feedback_repository import (
-    EmployeeFeedbackRepository,
-    employee_feedback_repository,
-)
+from fastapi import Depends
+from sqlalchemy.orm import Session
+
+from app.core.database import get_db
+from app.dataservice.employee_feedback_repository import EmployeeFeedbackRepository
 from app.models.employee_feedback import (
     EmployeeFeedback,
     EmployeeFeedbackCreate,
@@ -32,6 +33,7 @@ class EmployeeFeedbackService:
         return self._repository.delete(item_id)
 
 
-def get_employee_feedback_service() -> EmployeeFeedbackService:
+def get_employee_feedback_service(db: Session = Depends(get_db)) -> EmployeeFeedbackService:
     """FastAPI dependency factory for `EmployeeFeedbackService`."""
-    return EmployeeFeedbackService(employee_feedback_repository)
+    repository = EmployeeFeedbackRepository(db)
+    return EmployeeFeedbackService(repository)
