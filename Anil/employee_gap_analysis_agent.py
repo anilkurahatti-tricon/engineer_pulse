@@ -51,7 +51,7 @@ class ProjectRequirement:
 # Sample data (replace with real data from the DB / API in production)
 # --------------------------------------------------------------------------
 SAMPLE_EMPLOYEE = Employee(
-    name="Rohan Mehta",
+    name="Anil Kurahatti",
     experience_years=4,
     current_skills=[".NET Framework", "ASP.NET MVC", "C#"],
     role="Software Engineer",
