@@ -1,3 +1,10 @@
 groq
 python-dotenv
+
 langchain-groq
+
+
+# Lang chain specific installations
+langchain
+langchain-openai
+langchain-anthropic
