@@ -1,4 +1,5 @@
 import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
+import AssessmentOutlinedIcon from "@mui/icons-material/AssessmentOutlined";
 import ChatIcon from "@mui/icons-material/Chat";
 import HomeIcon from "@mui/icons-material/Home";
 import RateReviewIcon from "@mui/icons-material/RateReview";
@@ -10,6 +11,7 @@ const links = [
   { to: "/", label: "Welcome", icon: <HomeIcon fontSize="small" />, end: true },
   { to: "/employee-feedback", label: "Feedback", icon: <RateReviewIcon fontSize="small" /> },
   { to: "/employee-skills", label: "Employee Skills", icon: <WorkspacePremiumIcon fontSize="small" /> },
+  { to: "/gap-analysis", label: "Gap Analysis", icon: <AssessmentOutlinedIcon fontSize="small" /> },
   { to: "/chatbot", label: "Chatbot", icon: <ChatIcon fontSize="small" /> },
   { to: "/demo", label: "Demo", icon: <ScienceIcon fontSize="small" /> },
 ];
