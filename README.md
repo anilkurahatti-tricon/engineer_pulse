@@ -55,6 +55,10 @@ for setup and run instructions for each part.
 | Employee Skills | `/api/employee-skills` | Sample CRUD with dummy data |
 | Chatbot | `/api/chatbot` | Sample CRUD for chat history + `POST /ask` for AI replies |
 
+## UI pages
+
+- **Gap Analysis**: `/gap-analysis` — displays employee readiness, strengths, gap priorities, recommended actions, and improvement areas. It currently uses the built-in sample payload and the existing Recharts dependency.
+
 ## How to run this application
 
 You need two terminals: one for the backend (FastAPI) and one for the

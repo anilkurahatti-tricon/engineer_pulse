@@ -7,6 +7,7 @@ import DemoPage from "./pages/DemoPage";
 import EmployeeFeedbackPage from "./pages/EmployeeFeedbackPage";
 import EmployeeSkillsPage from "./pages/EmployeeSkillsPage";
 import ChatbotPage from "./pages/ChatbotPage";
+import GapAnalysisDashboard from "./components/GapAnalysisDashboard";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path="/" element={<WelcomePage />} />
             <Route path="/employee-feedback" element={<EmployeeFeedbackPage />} />
             <Route path="/employee-skills" element={<EmployeeSkillsPage />} />
+            <Route path="/gap-analysis" element={<GapAnalysisDashboard />} />
             <Route path="/chatbot" element={<ChatbotPage />} />
             <Route path="/demo" element={<DemoPage />} />
           </Routes>
