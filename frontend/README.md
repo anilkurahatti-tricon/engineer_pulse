@@ -44,6 +44,6 @@ npm run dev
 App: http://localhost:5173
 
 Pages: Welcome (landing page), Demo, Employee Feedback, Employee Skills,
-Chatbot - each calling the matching backend controller. The Welcome page
-fetches its copy from `/api/welcome` and falls back to built-in placeholder
-text if the backend isn't reachable yet.
+Chatbot, and Gap Analysis. The Gap Analysis page is a responsive dashboard
+with readiness, strength, gap-priority, and improvement-area sections. It
+currently renders built-in sample data and uses the existing Recharts package.
