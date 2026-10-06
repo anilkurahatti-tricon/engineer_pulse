@@ -8,3 +8,8 @@ langchain-groq
 langchain
 langchain-openai
 langchain-anthropic
+
+# Optional: only needed if top_n_matching_profile_agent.py connects to the
+# Postgres + pgvector store (USE_PGVECTOR=true) instead of the in-memory demo mode
+psycopg2-binary
+pgvector
