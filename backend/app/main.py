@@ -12,6 +12,7 @@ from app.controllers import (
     demo_controller,
     employee_feedback_controller,
     employee_skills_controller,
+    gap_analysis_controller,
     welcome_controller,
 )
 from app.core.config import get_settings
@@ -46,6 +47,7 @@ app.include_router(demo_controller.router)
 app.include_router(employee_feedback_controller.router)
 app.include_router(employee_skills_controller.router)
 app.include_router(chatbot_controller.router)
+app.include_router(gap_analysis_controller.router)
 
 
 @app.get("/", tags=["Health"], summary="Health check")
