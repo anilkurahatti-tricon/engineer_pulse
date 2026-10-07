@@ -124,3 +124,20 @@ class DemoItemModel(Base):
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=lambda: datetime.now(timezone.utc)
     )
+
+
+class RoadmapModel(Base):
+    """SQLAlchemy model for AI-generated employee upskilling roadmaps."""
+
+    __tablename__ = "roadmaps"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    employee_id: Mapped[int | None] = mapped_column(Integer, nullable=True, index=True)
+    employee_name: Mapped[str] = mapped_column(String(255), nullable=False)
+    role: Mapped[str | None] = mapped_column(String(100), nullable=True)
+    overall_goal: Mapped[str | None] = mapped_column(Text, nullable=True)
+    gap_analysis_json: Mapped[str] = mapped_column(Text, nullable=False)  # input snapshot, JSON-serialized
+    roadmap_json: Mapped[str] = mapped_column(Text, nullable=False)       # agent output, JSON-serialized
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=lambda: datetime.now(timezone.utc)
+    )
