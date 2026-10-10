@@ -37,6 +37,7 @@ class Employee:
     experience_years: float
     current_skills: List[str]
     role: str = "Software Engineer"
+    employee_id: Optional[int] = field(default=None)
 
 
 @dataclass
@@ -45,6 +46,7 @@ class ProjectRequirement:
     description: str
     required_skills: List[str]
     tech_stack_summary: Optional[str] = field(default=None)
+    project_id: Optional[int] = field(default=None)
 
 
 # --------------------------------------------------------------------------

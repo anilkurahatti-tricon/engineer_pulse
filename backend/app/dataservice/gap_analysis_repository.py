@@ -27,6 +27,7 @@ class GapAnalysisRepository:
             experience_years=float(model.total_experience_years),
             current_skills=current_skills,
             role=model.title,
+            employee_id=model.id,
         )
 
     def get_projects(self, project_ids: list[int]) -> list[ProjectRequirement]:
@@ -38,6 +39,7 @@ class GapAnalysisRepository:
                 description=m.description,
                 required_skills=[s.strip() for s in m.technologies.split(",") if s.strip()],
                 tech_stack_summary=m.technologies,
+                project_id=m.id,
             )
             for m in models
         ]
