@@ -19,7 +19,8 @@ Extensibility points:
 
 import json
 import os
-from typing import List
+from dataclasses import asdict
+from typing import List, Tuple
 
 import dotenv
 from langchain_core.output_parsers import JsonOutputParser
@@ -113,20 +114,49 @@ def sample_project_for_id(project_id: int) -> ProjectRequirement:
 
 
 # --------------------------------------------------------------------------
+# Deterministic skill matching (never left to the LLM to avoid score/matched-skills drift)
+# --------------------------------------------------------------------------
+def _normalize(skill: str) -> str:
+    return skill.strip().lower()
+
+
+def _skills_overlap(required_skill: str, current_skill: str) -> bool:
+    """Case-insensitive exact or substring match, e.g. "Docker" <-> "Docker Compose"."""
+    required, current = _normalize(required_skill), _normalize(current_skill)
+    return required == current or required in current or current in required
+
+
+def compute_skill_match(required_skills: List[str], current_skills: List[str]) -> Tuple[List[str], List[str]]:
+    """Deterministically splits required_skills into matched/missing against current_skills.
+
+    Computed in Python (not by the LLM) so "matched_skills" always agrees with the raw
+    skill lists, and the readiness score can be reliably anchored to it.
+    """
+    matched = [req for req in required_skills if any(_skills_overlap(req, cur) for cur in current_skills)]
+    missing = [req for req in required_skills if req not in matched]
+    return matched, missing
+
+
+# --------------------------------------------------------------------------
 # Prompt
 # --------------------------------------------------------------------------
 SYSTEM_PROMPT = """You are an expert Technical Career Coach and Talent-Matching Analyst.
-You compare ONE target project's required skills against a pool of employees and score
-EVERY employee's readiness for that project, using the same methodology a skills-gap
-analysis would use.
+You score EVERY employee's readiness for ONE target project, using the same methodology a
+skills-gap analysis would use.
+
+Each employee in the input already includes precomputed "matched_skills" and
+"missing_skills" (exact overlap between the employee's current skills and the project's
+required skills) plus a "skill_match_ratio" (matched / total required skills). These are
+ground truth - you MUST return them back unchanged in your output, never recompute or alter them.
 
 Rules:
 - Base your analysis only on the project and employee data provided in the user message.
 - You MUST score every single employee in the input list - never omit one.
-- "overall_readiness_score" is an integer 0-100 estimating how ready the employee is for
-  this project today, considering skill coverage, proficiency depth, and relevant experience.
-- "matched_skills" are required project skills the employee already has.
-- "missing_skills" are required project skills the employee does NOT currently have.
+- "overall_readiness_score" is an integer 0-100. It MUST be driven primarily by
+  "skill_match_ratio": if skill_match_ratio is 0 (no matched skills at all), the score MUST
+  be 0 regardless of experience or role. Otherwise, scale the score with skill_match_ratio
+  and use experience_years / role relevance only as a secondary modifier (+/- a few points).
+- Return the employee's "matched_skills" and "missing_skills" exactly as given in the input.
 - Respond with ONLY valid JSON (no markdown fences, no commentary) matching EXACTLY this structure:
 
 {{
@@ -145,13 +175,19 @@ Rules:
 
 
 def _format_user_prompt(project: ProjectRequirement, employees: List[Employee]) -> str:
-    """Builds the user-turn content sent to the LLM from structured data."""
-    from dataclasses import asdict
+    """Builds the user-turn content sent to the LLM, with skill matches precomputed per employee."""
+    employees_payload = []
+    for employee in employees:
+        matched, missing = compute_skill_match(project.required_skills, employee.current_skills)
+        employee_payload = asdict(employee)
+        employee_payload["matched_skills"] = matched
+        employee_payload["missing_skills"] = missing
+        employee_payload["skill_match_ratio"] = (
+            round(len(matched) / len(project.required_skills), 2) if project.required_skills else 0.0
+        )
+        employees_payload.append(employee_payload)
 
-    payload = {
-        "project": asdict(project),
-        "employees": [asdict(e) for e in employees],
-    }
+    payload = {"project": asdict(project), "employees": employees_payload}
     return (
         "Score every employee below against the target project and return the JSON "
         "described in the system prompt.\n\n"
@@ -189,9 +225,25 @@ def run_top_n_match(
     user_input = _format_user_prompt(project, employees)
     result = chain.invoke({"input": user_input})
 
+    # Re-derive matched/missing skills and re-anchor the score ourselves - never trust the
+    # LLM's own copy, since it can drift from the ground-truth skill overlap (e.g. report a
+    # non-zero score with an empty matched_skills list).
+    employees_by_name = {e.name: e for e in employees}
+    candidates = result.get("candidates", [])
+    for candidate in candidates:
+        employee = employees_by_name.get(candidate.get("employee_name"))
+        if employee is None:
+            continue
+        matched, missing = compute_skill_match(project.required_skills, employee.current_skills)
+        candidate["matched_skills"] = matched
+        candidate["missing_skills"] = missing
+        if not matched:
+            candidate["overall_readiness_score"] = 0
+        else:
+            candidate["overall_readiness_score"] = max(0, min(100, candidate.get("overall_readiness_score", 0)))
+
     # Map scored candidates back to employee_id by name so API consumers can link to a profile.
     employee_id_by_name = {e.name: e.employee_id for e in employees}
-    candidates = result.get("candidates", [])
     candidates.sort(key=lambda c: c.get("overall_readiness_score", 0), reverse=True)
     top_candidates = candidates[: max(top_n, 0)]
     for rank, candidate in enumerate(top_candidates, start=1):
