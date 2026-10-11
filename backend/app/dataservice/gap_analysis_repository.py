@@ -12,6 +12,22 @@ class GapAnalysisRepository:
     def __init__(self, db: Session):
         self.db = db
 
+    def get_options(self) -> dict[str, list[dict[str, int | str]]]:
+        employees = self.db.execute(
+            select(EmployeeModel.id, EmployeeModel.name).order_by(EmployeeModel.name)
+        ).all()
+        projects = self.db.execute(
+            select(EmployeeProjectModel.id, EmployeeProjectModel.project_name)
+            .distinct()
+            .order_by(EmployeeProjectModel.project_name)
+        ).all()
+        return {
+            "employees": [{"id": row.id, "name": row.name} for row in employees],
+            "projects": [
+                {"id": row.id, "name": row.project_name} for row in projects
+            ],
+        }
+
     def get_employee(self, employee_id: int) -> Employee | None:
         model = self.db.get(EmployeeModel, employee_id)
         if not model:

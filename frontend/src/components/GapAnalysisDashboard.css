@@ -15,6 +15,316 @@
   box-sizing: border-box;
 }
 
+.gap-dashboard--roadmap {
+  gap: 18px;
+}
+
+.gap-controls-copy .gap-eyebrow-light {
+  color: #459474;
+}
+
+.gap-controls {
+  display: grid;
+  gap: 18px;
+}
+
+.gap-controls-copy h1 {
+  margin: 0;
+  color: var(--gap-ink);
+  font-size: 21px;
+  font-weight: 600;
+}
+
+.gap-controls-copy p {
+  margin: 5px 0 0;
+  color: var(--gap-muted);
+  font-size: 13px;
+}
+
+.gap-controls-fields {
+  display: grid;
+  grid-template-columns: minmax(120px, 0.7fr) minmax(180px, 1.3fr) auto;
+  align-items: start;
+  gap: 12px;
+}
+
+.gap-controls-fields label {
+  display: grid;
+  gap: 6px;
+  color: #435149;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.gap-controls-fields input {
+  width: 100%;
+  min-height: 40px;
+  padding: 8px 10px;
+  color: var(--gap-ink);
+  background: #fff;
+  border: 1px solid #ccd7ce;
+  border-radius: 5px;
+  font: inherit;
+  font-size: 14px;
+}
+
+.gap-controls-fields input:focus {
+  outline: 2px solid #7bb396;
+  outline-offset: 1px;
+}
+
+.gap-controls-fields small {
+  color: var(--gap-muted);
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.gap-controls-fields button {
+  min-height: 40px;
+  align-self: end;
+  padding: 0 17px;
+  color: #fff;
+  background: #28785c;
+  border: 0;
+  border-radius: 5px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.gap-controls-fields button:hover:not(:disabled) {
+  background: #20664d;
+}
+
+.gap-controls-fields button:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+.gap-selectors {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.8fr) minmax(300px, 1.4fr) auto;
+  align-items: center;
+  gap: 14px;
+}
+
+.gap-selectors .MuiFormControl-root {
+  min-width: 0;
+}
+
+.gap-selectors .MuiSelect-select {
+  color: #000 !important;
+  -webkit-text-fill-color: #000;
+}
+
+.gap-selectors .MuiSelect-icon {
+  color: #000;
+}
+
+.gap-workflow-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.gap-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
+}
+
+.gap-results {
+  display: grid;
+  min-width: 0;
+  gap: 18px;
+  align-content: start;
+}
+
+.gap-workspace--roadmap {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(260px, 0.72fr);
+  align-items: start;
+  gap: 18px;
+}
+
+.gap-roadmap-panel {
+  position: sticky;
+  top: 84px;
+  display: grid;
+  gap: 22px;
+  min-width: 0;
+  padding: 22px;
+  animation: gap-panel-enter 260ms ease-out both;
+}
+
+.gap-roadmap-person {
+  display: grid;
+  gap: 16px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--gap-line);
+}
+
+.gap-roadmap-person h2 {
+  margin: 6px 0 0;
+  overflow-wrap: anywhere;
+  color: var(--gap-ink);
+  font-size: 20px;
+  line-height: 1.25;
+}
+
+.gap-roadmap-score {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  color: var(--gap-muted);
+  font-size: 12px;
+}
+
+.gap-roadmap-score strong {
+  color: var(--gap-green);
+  font-size: 24px;
+}
+
+.gap-roadmap-score small {
+  padding-left: 2px;
+  color: var(--gap-muted);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.gap-roadmap-content > h2 {
+  margin: 0 0 14px;
+  font-size: 16px;
+}
+
+.gap-roadmap-placeholder {
+  display: grid;
+  justify-items: start;
+  gap: 9px;
+  min-height: 160px;
+  align-content: center;
+  padding: 16px;
+  color: var(--gap-muted);
+  background: #f6f8f5;
+  border: 1px dashed #cbd8ce;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.gap-roadmap-placeholder p {
+  margin: 0;
+  color: var(--gap-ink);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.gap-roadmap-placeholder-mark {
+  color: var(--gap-green);
+  font-size: 24px;
+}
+
+.gap-roadmap-details {
+  display: grid;
+  gap: 12px;
+}
+
+.gap-roadmap-goal,
+.gap-roadmap-summary {
+  margin: 0;
+  color: #45534c;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.gap-roadmap-target {
+  margin: 0;
+  color: var(--gap-muted);
+  font-size: 12px;
+}
+
+.gap-roadmap-target strong {
+  color: var(--gap-green);
+}
+
+.gap-roadmap-month {
+  padding: 13px;
+  background: #f6f8f5;
+  border-left: 2px solid #7bb396;
+  border-radius: 0 5px 5px 0;
+}
+
+.gap-roadmap-month > span {
+  color: #459474;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.gap-roadmap-month h3 {
+  margin: 5px 0 7px;
+  color: var(--gap-ink);
+  font-size: 13px;
+}
+
+.gap-roadmap-month p,
+.gap-roadmap-month li {
+  margin: 5px 0 0;
+  color: var(--gap-muted);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.gap-roadmap-month ul {
+  margin: 7px 0 0;
+  padding-left: 17px;
+}
+
+.gap-roadmap-month li {
+  margin-top: 3px;
+}
+
+@keyframes gap-panel-enter {
+  from { opacity: 0; transform: translateX(-8px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.gap-inline-loading,
+.gap-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--gap-muted);
+  font-size: 13px;
+}
+
+.gap-status {
+  min-height: 72px;
+}
+
+.gap-spinner {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  border: 2px solid #dce8df;
+  border-top-color: #28785c;
+  border-radius: 50%;
+  animation: gap-spin 0.8s linear infinite;
+}
+
+.gap-error {
+  padding: 12px 14px;
+  color: #9f332c;
+  background: #fff0ed;
+  border: 1px solid #f1c7c0;
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+@keyframes gap-spin {
+  to { transform: rotate(360deg); }
+}
+
 .gap-hero {
   min-height: 214px;
   display: flex;
@@ -39,7 +349,8 @@
   letter-spacing: 1.3px;
 }
 
-.gap-hero h1 {
+.gap-hero h1,
+.gap-hero h2 {
   margin: 12px 0 5px;
   font-size: 36px;
   line-height: 1.1;
@@ -312,13 +623,26 @@
     gap: 12px;
   }
 
+  .gap-controls-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .gap-selectors {
+    grid-template-columns: 1fr;
+  }
+
+  .gap-controls-fields button {
+    justify-self: start;
+  }
+
   .gap-hero {
     min-height: 0;
     align-items: flex-start;
     padding: 24px 20px 18px;
   }
 
-  .gap-hero h1 {
+  .gap-hero h1,
+  .gap-hero h2 {
     font-size: 29px;
   }
 
@@ -348,6 +672,14 @@
   .gap-strength-grid,
   .gap-improvement-grid {
     grid-template-columns: 1fr;
+  }
+
+  .gap-workspace--roadmap {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .gap-roadmap-panel {
+    position: static;
   }
 }
 

@@ -11,7 +11,7 @@ const links = [
   { to: "/", label: "Welcome", icon: <HomeIcon fontSize="small" />, end: true },
   { to: "/employee-feedback", label: "Feedback", icon: <RateReviewIcon fontSize="small" /> },
   { to: "/employee-skills", label: "Employee Skills", icon: <WorkspacePremiumIcon fontSize="small" /> },
-  { to: "/gap-analysis", label: "Gap Analysis", icon: <AssessmentOutlinedIcon fontSize="small" /> },
+  { to: "/skill-match", label: "Skill Match", icon: <AssessmentOutlinedIcon fontSize="small" /> },
   { to: "/chatbot", label: "Chatbot", icon: <ChatIcon fontSize="small" /> },
   { to: "/demo", label: "Demo", icon: <ScienceIcon fontSize="small" /> },
 ];

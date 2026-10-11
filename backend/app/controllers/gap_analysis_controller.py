@@ -7,6 +7,16 @@ from app.models.gap_analysis import GapAnalysisRequest, GapAnalysisResponse
 router = APIRouter(prefix="/api/gap-analysis", tags=["Gap Analysis"])
 
 
+@router.get(
+    "/options",
+    summary="List employees and projects available for skill matching",
+)
+def get_gap_analysis_options(
+    service: GapAnalysisService = Depends(get_gap_analysis_service),
+) -> dict:
+    return service.get_options()
+
+
 @router.post(
     "/analyze",
     response_model=GapAnalysisResponse,
