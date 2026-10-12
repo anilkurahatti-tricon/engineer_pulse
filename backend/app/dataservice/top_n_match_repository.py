@@ -39,6 +39,26 @@ class TopNMatchRepository:
             tech_stack_summary=model.technologies,
         )
 
+    def get_all_projects(self) -> list[ProjectRequirement]:
+        try:
+            models = self.db.scalars(select(EmployeeProjectModel)).all()
+            if models:
+                return [
+                    ProjectRequirement(
+                        project_id=m.id,
+                        project_name=m.project_name,
+                        description=m.description,
+                        required_skills=[s.strip() for s in m.technologies.split(",") if s.strip()],
+                        tech_stack_summary=m.technologies,
+                    )
+                    for m in models
+                ]
+        except (OperationalError, ProgrammingError) as exc:
+            self.db.rollback()
+            logger.warning("Skipping all projects lookup - database/table unavailable: %s", exc)
+        from agents.top_n_match_agent import SAMPLE_PROJECTS_BY_ID
+        return list(SAMPLE_PROJECTS_BY_ID.values())
+
     def get_all_employees(self) -> list[Employee]:
         try:
             employee_models = self.db.scalars(select(EmployeeModel)).all()

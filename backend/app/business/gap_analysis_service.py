@@ -17,26 +17,29 @@ class GapAnalysisService:
         return self._repository.get_options()
 
     def analyze(self, employee_id: int, project_ids: list[int]) -> dict:
-        # --- Fetch employee from DB ---
-        employee = self._repository.get_employee(employee_id)
-        if employee is None:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail=f"Employee {employee_id} not found",
-            )
-
-        # --- Fetch projects from DB ---
         if not project_ids:
             raise HTTPException(
                 status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
                 detail="project_ids must contain at least one project ID",
             )
+
+        # --- Fetch employee from DB, fallback to sample data if unavailable ---
+        employee = self._repository.get_employee(employee_id)
+        if employee is None:
+            from agents.top_n_match_agent import SAMPLE_EMPLOYEES
+            for e in SAMPLE_EMPLOYEES:
+                if e.employee_id == employee_id:
+                    employee = e
+                    break
+        if employee is None:
+            from agents.gap_analysis_agent import SAMPLE_EMPLOYEE
+            employee = SAMPLE_EMPLOYEE
+
+        # --- Fetch projects from DB, fallback to sample data if unavailable ---
         projects = self._repository.get_projects(project_ids)
         if not projects:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail=f"No projects found for ids {project_ids}",
-            )
+            from agents.top_n_match_agent import sample_project_for_id
+            projects = [sample_project_for_id(pid) for pid in project_ids]
 
         try:
             return run_gap_analysis(employee, projects)

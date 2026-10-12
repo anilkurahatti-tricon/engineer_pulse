@@ -29,6 +29,19 @@ class TopNMatchService:
         except RuntimeError as exc:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(exc))
 
+    def list_projects(self) -> list[dict]:
+        projects = self._repository.get_all_projects()
+        return [
+            {
+                "id": p.project_id,
+                "project_name": p.project_name,
+                "description": p.description,
+                "required_skills": p.required_skills,
+                "tech_stack_summary": p.tech_stack_summary,
+            }
+            for p in projects
+        ]
+
 
 def get_top_n_match_service(db: Session = Depends(get_db)) -> TopNMatchService:
     """FastAPI dependency factory for `TopNMatchService`."""

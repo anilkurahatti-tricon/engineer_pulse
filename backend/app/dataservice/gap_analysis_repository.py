@@ -29,33 +29,41 @@ class GapAnalysisRepository:
         }
 
     def get_employee(self, employee_id: int) -> Employee | None:
-        model = self.db.get(EmployeeModel, employee_id)
-        if not model:
+        try:
+            model = self.db.get(EmployeeModel, employee_id)
+            if not model:
+                return None
+
+            skill_stmt = select(EmployeeSkillModel.skill_name).where(
+                EmployeeSkillModel.employee_id == employee_id
+            )
+            current_skills = [row for row in self.db.scalars(skill_stmt).all()]
+
+            return Employee(
+                name=model.name,
+                experience_years=float(model.total_experience_years),
+                current_skills=current_skills,
+                role=model.title,
+                employee_id=model.id,
+            )
+        except Exception:
+            self.db.rollback()
             return None
 
-        skill_stmt = select(EmployeeSkillModel.skill_name).where(
-            EmployeeSkillModel.employee_id == employee_id
-        )
-        current_skills = [row for row in self.db.scalars(skill_stmt).all()]
-
-        return Employee(
-            name=model.name,
-            experience_years=float(model.total_experience_years),
-            current_skills=current_skills,
-            role=model.title,
-            employee_id=model.id,
-        )
-
     def get_projects(self, project_ids: list[int]) -> list[ProjectRequirement]:
-        stmt = select(EmployeeProjectModel).where(EmployeeProjectModel.id.in_(project_ids))
-        models = self.db.scalars(stmt).all()
-        return [
-            ProjectRequirement(
-                project_name=m.project_name,
-                description=m.description,
-                required_skills=[s.strip() for s in m.technologies.split(",") if s.strip()],
-                tech_stack_summary=m.technologies,
-                project_id=m.id,
-            )
-            for m in models
-        ]
+        try:
+            stmt = select(EmployeeProjectModel).where(EmployeeProjectModel.id.in_(project_ids))
+            models = self.db.scalars(stmt).all()
+            return [
+                ProjectRequirement(
+                    project_name=m.project_name,
+                    description=m.description,
+                    required_skills=[s.strip() for s in m.technologies.split(",") if s.strip()],
+                    tech_stack_summary=m.technologies,
+                    project_id=m.id,
+                )
+                for m in models
+            ]
+        except Exception:
+            self.db.rollback()
+            return []

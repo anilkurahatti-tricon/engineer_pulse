@@ -7,20 +7,21 @@ import DemoPage from "./pages/DemoPage";
 import EmployeeFeedbackPage from "./pages/EmployeeFeedbackPage";
 import EmployeeSkillsPage from "./pages/EmployeeSkillsPage";
 import ChatbotPage from "./pages/ChatbotPage";
-import SkillMatchPage from "./components/GapAnalysisDashboard";
+import GapAnalysisDashboard from "./components/GapAnalysisDashboard";
+import { TopNMatchPage } from "./top_n_match";
 
 function App() {
   return (
     <BrowserRouter>
       <Box sx={{ minHeight: "100svh", display: "flex", flexDirection: "column" }}>
         <NavBar />
-        <Box component="main" sx={{ flex: 1, maxWidth: 1100, mx: "auto", px: 2, py: 4, width: "100%" }}>
+        <Box component="main" sx={{ flex: 1, maxWidth: 1200, mx: "auto", px: 2, py: 4, width: "100%" }}>
           <Routes>
             <Route path="/" element={<WelcomePage />} />
             <Route path="/employee-feedback" element={<EmployeeFeedbackPage />} />
             <Route path="/employee-skills" element={<EmployeeSkillsPage />} />
-            <Route path="/skill-match" element={<SkillMatchPage />} />
-            <Route path="/gap-analysis" element={<SkillMatchPage />} />
+            <Route path="/top-n-match" element={<TopNMatchPage />} />
+            <Route path="/gap-analysis" element={<GapAnalysisDashboard />} />
             <Route path="/chatbot" element={<ChatbotPage />} />
             <Route path="/demo" element={<DemoPage />} />
           </Routes>
