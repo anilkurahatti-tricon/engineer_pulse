@@ -9,6 +9,7 @@ class GapAnalysisRequest(BaseModel):
 
     employee_id: int = Field(examples=[1], description="ID of the employee in the employees table")
     project_ids: list[int] = Field(examples=[[1, 2]], description="List of project IDs from employee_projects table to analyse against")
+    overall_readiness_score: float | None = Field(default=None, description="Optional readiness score anchor from match ranking")
 
 
 # The agent returns a free-form JSON payload (strengths/gaps/score/etc.), so the
