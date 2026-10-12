@@ -13,6 +13,9 @@ class GapAnalysisService:
     def __init__(self, repository: GapAnalysisRepository) -> None:
         self._repository = repository
 
+    def get_options(self) -> dict:
+        return self._repository.get_options()
+
     def analyze(self, employee_id: int, project_ids: list[int]) -> dict:
         # --- Fetch employee from DB ---
         employee = self._repository.get_employee(employee_id)
