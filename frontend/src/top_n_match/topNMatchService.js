@@ -55,10 +55,13 @@ export const topNMatchService = {
   /**
    * Run Gap Analysis using POST /api/gap-analysis/analyze
    */
-  async analyzeGap(employeeId, projectIds) {
+  async analyzeGap(employeeId, projectIds, overallReadinessScore = null) {
     const payload = {
       employee_id: Number(employeeId),
       project_ids: Array.isArray(projectIds) ? projectIds.map(Number) : [Number(projectIds)],
+      ...(overallReadinessScore !== null && overallReadinessScore !== undefined
+        ? { overall_readiness_score: Number(overallReadinessScore) }
+        : {}),
     };
     const response = await apiClient.post("/api/gap-analysis/analyze", payload);
     return response.data;

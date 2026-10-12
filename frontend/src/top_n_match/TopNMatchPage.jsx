@@ -94,12 +94,26 @@ export default function TopNMatchPage() {
     try {
       const gapResult = await topNMatchService.analyzeGap(
         employee.employee_id,
-        [selectedProjectId]
+        [selectedProjectId],
+        employee.overall_readiness_score
       );
+
+      // Ensure readiness score stays 100% consistent with the candidate's match score
+      const consistentScore =
+        employee.overall_readiness_score !== undefined &&
+        employee.overall_readiness_score !== null
+          ? employee.overall_readiness_score
+          : gapResult.overall_readiness_score;
+
+      const unifiedGapResult = {
+        ...gapResult,
+        overall_readiness_score: consistentScore,
+      };
+
       // Store analyzed gap result for this employee
       setAnalyzedGaps((prev) => ({
         ...prev,
-        [employee.employee_id]: gapResult,
+        [employee.employee_id]: unifiedGapResult,
       }));
       setAlertInfo({
         type: "success",
@@ -436,6 +450,7 @@ export default function TopNMatchPage() {
         <Box>
           <GapAnalysisPanel
             gapData={activeEmployee ? analyzedGaps[activeEmployee.employee_id] : null}
+            employeeScore={activeEmployee?.overall_readiness_score}
             loading={analyzingEmployeeId !== null}
             error={gapAnalysisError}
             projectName={currentProject.project_name}

@@ -16,6 +16,7 @@ import LightbulbOutlinedIcon from "@mui/icons-material/LightbulbOutlined";
 
 export default function GapAnalysisPanel({
   gapData,
+  employeeScore,
   loading,
   error,
   projectName,
@@ -71,7 +72,11 @@ export default function GapAnalysisPanel({
     );
   }
 
-  const score = Math.round(gapData.overall_readiness_score || 0);
+  const rawScore =
+    employeeScore !== undefined && employeeScore !== null
+      ? employeeScore
+      : gapData.overall_readiness_score;
+  const score = Math.round(rawScore || 0);
   const scoreClass = score >= 70 ? "high" : score >= 50 ? "medium" : "low";
 
   return (
