@@ -1,0 +1,690 @@
+/* ============================================================
+   Top-N Match – colour palette matches GapAnalysisDashboard
+   ============================================================ */
+
+/* Shared design tokens (mirrors gap-dashboard) */
+.top-n-container {
+  --tn-ink:    #20342d;
+  --tn-muted:  #697770;
+  --tn-line:   #e5ebe6;
+  --tn-paper:  #ffffff;
+  --tn-green:  #28785c;
+  --tn-green-dark: #20664d;
+  --tn-green-light: #64ad89;
+  --tn-green-pale:  #f6f8f5;
+  --tn-green-border: #e8efe9;
+  --tn-accent: #a8d9c0;
+  --tn-hero-bg: #203a31;
+
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  color: var(--tn-ink);
+  font-family: Roboto, "Segoe UI", sans-serif;
+}
+
+.top-n-container * {
+  box-sizing: border-box;
+}
+
+/* ── Hero banner ────────────────────────────────────────────── */
+.top-n-header-card {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 28px 36px;
+  overflow: hidden;
+  color: #fff;
+  background: var(--tn-hero-bg);
+  border-radius: 10px;
+}
+
+.top-n-hero-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.top-n-eyebrow {
+  color: var(--tn-accent);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.top-n-title {
+  margin: 0;
+  font-size: 28px;
+  line-height: 1.15;
+  font-weight: 600;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.top-n-subtitle {
+  margin: 0;
+  color: #c6d5cd;
+  font-size: 13px;
+  line-height: 1.5;
+  max-width: 600px;
+}
+
+.top-n-badge {
+  display: inline-flex;
+  align-self: flex-start;
+  background: rgba(168, 217, 192, 0.2);
+  color: var(--tn-accent);
+  border: 1px solid rgba(168, 217, 192, 0.35);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.2rem 0.65rem;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 6px;
+}
+
+/* ── Controls area ─────────────────────────────────────────── */
+.top-n-controls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Make the project select grow to fill available space */
+.top-n-controls > .MuiFormControl-root:first-child {
+  flex: 1 1 220px;
+  min-width: 180px;
+}
+
+/* Top-N select stays fixed width */
+.top-n-controls > .MuiFormControl-root:last-of-type {
+  flex: 0 0 130px;
+}
+
+.top-n-controls > .MuiButtonBase-root {
+  flex-shrink: 0;
+}
+
+/* ── Section heading (mirrors .gap-section-heading) ─────── */
+.section-eyebrow {
+  color: #459474;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.section-heading-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.section-heading-row h2 {
+  margin: 0;
+  color: var(--tn-ink);
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.section-count {
+  margin-left: auto;
+  color: var(--tn-muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+/* ── Two-column layout ───────────────────────────────────── */
+.top-n-main-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(260px, 0.72fr);
+  gap: 18px;
+  align-items: start;
+}
+
+/* ── Employee list ───────────────────────────────────────── */
+.employees-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ── Employee card (mirrors .gap-panel) ─────────────────── */
+.employee-card {
+  min-width: 0;
+  padding: 20px 22px;
+  background: var(--tn-paper);
+  border: 1px solid var(--tn-line);
+  border-radius: 8px;
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.employee-card:hover {
+  box-shadow: 0 4px 12px rgba(32, 58, 49, 0.08);
+  border-color: #b5cebe;
+}
+
+.employee-card.selected {
+  border-color: var(--tn-green);
+  box-shadow: 0 0 0 2px rgba(40, 120, 92, 0.18), 0 4px 12px rgba(32, 58, 49, 0.08);
+}
+
+/* ── Card header ─────────────────────────────────────────── */
+.employee-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 12px;
+}
+
+.employee-info-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Rank badge */
+.rank-badge {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: white;
+  flex-shrink: 0;
+}
+
+.rank-badge.rank-1 {
+  background: linear-gradient(135deg, #d4a017, #b8860b);
+  box-shadow: 0 2px 8px rgba(180, 134, 11, 0.4);
+}
+
+.rank-badge.rank-2 {
+  background: linear-gradient(135deg, #697770, #4a5850);
+  box-shadow: 0 2px 6px rgba(105, 119, 112, 0.35);
+}
+
+.rank-badge.rank-3 {
+  background: linear-gradient(135deg, #9a7b50, #7a5c38);
+  box-shadow: 0 2px 6px rgba(154, 123, 80, 0.35);
+}
+
+.rank-badge.rank-other {
+  background: #697770;
+}
+
+.employee-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--tn-ink);
+  margin: 0;
+}
+
+.employee-role {
+  font-size: 0.8rem;
+  color: var(--tn-muted);
+  margin: 2px 0 0 0;
+}
+
+/* Readiness pill (mirrors .gap-roadmap-score) */
+.readiness-score-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+}
+
+.readiness-score-value {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--tn-green);
+}
+
+.readiness-score-value.medium {
+  color: #8a6112;
+}
+
+.readiness-score-value.low {
+  color: #9f332c;
+}
+
+.readiness-score-label {
+  font-size: 11px;
+  color: var(--tn-muted);
+  font-weight: 400;
+}
+
+/* ── Skills section ─────────────────────────────────────── */
+.employee-skills-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 12px 0;
+  padding: 12px 14px;
+  background: var(--tn-green-pale);
+  border-radius: 6px;
+}
+
+.skills-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.skills-label {
+  font-weight: 600;
+  min-width: 65px;
+  color: #435149;
+}
+
+.skills-chips-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+/* Matched skill chip */
+.skill-chip.matched {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #dff0e5;
+  color: #267451;
+  border: 1px solid #b8dfcb;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+
+/* Missing skill chip */
+.skill-chip.missing {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #f6f8f5;
+  color: var(--tn-muted);
+  border: 1px solid var(--tn-line);
+  font-size: 11px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+
+/* ── Action buttons ─────────────────────────────────────── */
+.employee-actions-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--tn-line);
+}
+
+/* Analyse Gap – primary green (matches .gap-controls-fields button) */
+.btn-analyze-gap {
+  min-height: 36px;
+  padding: 0 16px;
+  color: #fff !important;
+  background: var(--tn-green) !important;
+  border: 0 !important;
+  border-radius: 5px !important;
+  font: inherit !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  cursor: pointer;
+  text-transform: none !important;
+  box-shadow: none !important;
+  transition: background 0.15s !important;
+}
+
+.btn-analyze-gap:hover:not(:disabled) {
+  background: var(--tn-green-dark) !important;
+}
+
+.btn-analyze-gap:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+/* Recommender – teal outline accent (stays in the green family) */
+.btn-recommender {
+  min-height: 36px;
+  padding: 0 16px !important;
+  color: #fff !important;
+  background: #459474 !important;
+  border: 0 !important;
+  border-radius: 5px !important;
+  font: inherit !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  cursor: pointer;
+  text-transform: none !important;
+  box-shadow: none !important;
+  transition: background 0.15s !important;
+  animation: tn-pop-in 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+.btn-recommender:hover:not(:disabled) {
+  background: var(--tn-green) !important;
+}
+
+@keyframes tn-pop-in {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ── Right panel (mirrors .gap-panel + .gap-roadmap-panel) ── */
+.right-panel-card {
+  min-width: 0;
+  padding: 22px 24px;
+  background: var(--tn-paper);
+  border: 1px solid var(--tn-line);
+  border-radius: 8px;
+  position: sticky;
+  top: 84px;
+  max-height: calc(100vh - 104px);
+  overflow-y: auto;
+  animation: tn-panel-enter 260ms ease-out both;
+}
+
+@keyframes tn-panel-enter {
+  from { opacity: 0; transform: translateX(-8px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Placeholder state */
+.panel-placeholder {
+  display: grid;
+  justify-items: start;
+  gap: 9px;
+  min-height: 180px;
+  align-content: center;
+  padding: 16px;
+  color: var(--tn-muted);
+  background: var(--tn-green-pale);
+  border: 1px dashed #cbd8ce;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.panel-placeholder p {
+  margin: 0;
+  color: var(--tn-ink);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.placeholder-icon {
+  color: var(--tn-green);
+  font-size: 24px !important;
+}
+
+/* Panel header */
+.panel-header {
+  border-bottom: 1px solid var(--tn-line);
+  padding-bottom: 14px;
+  margin-bottom: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.panel-header-title {
+  margin: 6px 0 0;
+  color: var(--tn-ink);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.panel-header-subtitle {
+  margin: 4px 0 0;
+  color: var(--tn-muted);
+  font-size: 12px;
+}
+
+/* Summary quote (mirrors .gap-summary border accent) */
+.gap-summary-quote {
+  margin: 0 0 18px;
+  color: #45534c;
+  font-size: 13px;
+  line-height: 1.65;
+  padding: 12px 14px;
+  background: var(--tn-green-pale);
+  border-left: 3px solid var(--tn-green-light);
+  border-radius: 0 5px 5px 0;
+}
+
+/* Section title inside panel */
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 18px 0 12px;
+  color: var(--tn-ink);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Gap item card (mirrors .gap-improvement) */
+.gap-item-card {
+  min-width: 0;
+  padding: 13px 14px;
+  background: var(--tn-green-pale);
+  border-top: 2px solid #7bb396;
+  border-radius: 2px 2px 7px 7px;
+  margin-bottom: 10px;
+}
+
+.gap-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.gap-item-skill {
+  font-weight: 600;
+  color: var(--tn-ink);
+  font-size: 13px;
+}
+
+/* Priority badges (mirrors .gap-priority-*) */
+.gap-item-priority {
+  display: inline-flex;
+  align-items: center;
+  min-height: 20px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.gap-item-priority.high {
+  color: #a53b30;
+  background: #fbe9e6;
+}
+
+.gap-item-priority.medium {
+  color: #8a6112;
+  background: #fff3d5;
+}
+
+.gap-item-priority.low {
+  color: #286b4d;
+  background: #e5f3e9;
+}
+
+.gap-item-reason {
+  margin: 5px 0 7px;
+  color: var(--tn-muted);
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.gap-item-action {
+  display: flex;
+  gap: 7px;
+  margin: 0;
+  color: #45534c;
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.gap-item-action strong {
+  flex: 0 0 auto;
+  color: #287451;
+  font-weight: 600;
+}
+
+/* Strength tags (mirrors .gap-strength-mark) */
+.strength-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #dff0e5;
+  color: #267451;
+  border: 1px solid #b8dfcb;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  margin: 3px 5px 3px 0;
+}
+
+/* ── Roadmap timeline (mirrors .gap-roadmap-month) ────────── */
+.roadmap-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.roadmap-month-card {
+  padding: 13px;
+  background: var(--tn-green-pale);
+  border-left: 2px solid #7bb396;
+  border-radius: 0 5px 5px 0;
+}
+
+.roadmap-month-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 5px;
+}
+
+.roadmap-month-badge {
+  color: #459474;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.roadmap-month-title {
+  margin: 5px 0 7px;
+  color: var(--tn-ink);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.roadmap-resource-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  margin-top: 5px;
+  color: var(--tn-muted);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* ── Spinner / loading (mirrors .gap-spinner) ─────────────── */
+.gap-inline-loading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--tn-muted);
+  font-size: 13px;
+  min-height: 72px;
+}
+
+.gap-spinner {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  border: 2px solid #dce8df;
+  border-top-color: var(--tn-green);
+  border-radius: 50%;
+  animation: tn-spin 0.8s linear infinite;
+}
+
+@keyframes tn-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Error box (mirrors .gap-error) ──────────────────────── */
+.gap-error {
+  padding: 12px 14px;
+  color: #9f332c;
+  background: #fff0ed;
+  border: 1px solid #f1c7c0;
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .top-n-main-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .right-panel-card {
+    position: static;
+    max-height: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .top-n-container {
+    gap: 12px;
+  }
+
+  .top-n-header-card {
+    min-height: 0;
+    padding: 24px 20px 18px;
+    align-items: flex-start;
+  }
+
+  .top-n-title {
+    font-size: 28px;
+  }
+
+  .top-n-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .top-n-controls button,
+  .btn-search {
+    justify-self: start;
+  }
+}

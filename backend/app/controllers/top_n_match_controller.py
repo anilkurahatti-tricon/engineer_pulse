@@ -17,3 +17,13 @@ def match_top_n_employees(
     service: TopNMatchService = Depends(get_top_n_match_service),
 ) -> dict:
     return service.match(payload.project_id, payload.top_n)
+
+
+@router.get(
+    "/projects",
+    summary="List available projects for Top-N employee matching",
+)
+def list_projects(
+    service: TopNMatchService = Depends(get_top_n_match_service),
+) -> list[dict]:
+    return service.list_projects()

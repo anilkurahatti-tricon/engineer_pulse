@@ -10,9 +10,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.controllers import (
     chatbot_controller,
     demo_controller,
+    employee_controller,
     employee_feedback_controller,
     employee_skills_controller,
     gap_analysis_controller,
+    project_controller,
     roadmap_controller,
     top_n_match_controller,
     welcome_controller,
@@ -46,6 +48,8 @@ app.add_middleware(
 
 app.include_router(welcome_controller.router)
 app.include_router(demo_controller.router)
+app.include_router(employee_controller.router)
+app.include_router(project_controller.router)
 app.include_router(employee_feedback_controller.router)
 app.include_router(employee_skills_controller.router)
 app.include_router(chatbot_controller.router)
