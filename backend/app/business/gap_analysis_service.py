@@ -16,7 +16,7 @@ class GapAnalysisService:
     def get_options(self) -> dict:
         return self._repository.get_options()
 
-    def analyze(self, employee_id: int, project_ids: list[int]) -> dict:
+    def analyze(self, employee_id: int, project_ids: list[int], overall_readiness_score: float | None = None) -> dict:
         if not project_ids:
             raise HTTPException(
                 status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
@@ -42,7 +42,10 @@ class GapAnalysisService:
             projects = [sample_project_for_id(pid) for pid in project_ids]
 
         try:
-            return run_gap_analysis(employee, projects)
+            result = run_gap_analysis(employee, projects)
+            if overall_readiness_score is not None:
+                result["overall_readiness_score"] = overall_readiness_score
+            return result
         except RuntimeError as exc:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(exc))
 

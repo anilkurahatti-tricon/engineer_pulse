@@ -26,4 +26,4 @@ def analyze_gap(
     payload: GapAnalysisRequest,
     service: GapAnalysisService = Depends(get_gap_analysis_service),
 ) -> dict:
-    return service.analyze(payload.employee_id, payload.project_ids)
+    return service.analyze(payload.employee_id, payload.project_ids, payload.overall_readiness_score)

@@ -140,7 +140,10 @@ def run_roadmap_generation(gap_analysis: dict[str, Any], chain=None) -> dict:
     """Single reusable entry point: returns the upskilling roadmap as a JSON-ready dict."""
     chain = chain or build_chain()
     user_input = _format_user_prompt(gap_analysis)
-    return chain.invoke({"input": user_input})
+    result = chain.invoke({"input": user_input})
+    if "overall_readiness_score" in gap_analysis and gap_analysis["overall_readiness_score"] is not None:
+        result["starting_readiness_score"] = gap_analysis["overall_readiness_score"]
+    return result
 
 
 if __name__ == "__main__":
