@@ -3,19 +3,13 @@ import AssessmentOutlinedIcon from "@mui/icons-material/AssessmentOutlined";
 import ChatIcon from "@mui/icons-material/Chat";
 import HomeIcon from "@mui/icons-material/Home";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
-import RateReviewIcon from "@mui/icons-material/RateReview";
-import ScienceIcon from "@mui/icons-material/Science";
-import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import { NavLink } from "react-router-dom";
 
 const links = [
   { to: "/", label: "Welcome", icon: <HomeIcon fontSize="small" />, end: true },
-  { to: "/employee-feedback", label: "Feedback", icon: <RateReviewIcon fontSize="small" /> },
-  { to: "/employee-skills", label: "Employee Skills", icon: <WorkspacePremiumIcon fontSize="small" /> },
   { to: "/top-n-match", label: "Top-N Match", icon: <PeopleAltOutlinedIcon fontSize="small" /> },
-  { to: "/gap-analysis", label: "Gap Analysis", icon: <AssessmentOutlinedIcon fontSize="small" /> },
+  { to: "/gap-analysis", label: "Skill Match", icon: <AssessmentOutlinedIcon fontSize="small" /> },
   { to: "/chatbot", label: "Chatbot", icon: <ChatIcon fontSize="small" /> },
-  { to: "/demo", label: "Demo", icon: <ScienceIcon fontSize="small" /> },
 ];
 
 export default function NavBar() {
