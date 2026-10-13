@@ -7,17 +7,16 @@ import { Link } from "react-router-dom";
 import { useWelcome } from "../business/useWelcome";
 
 const FALLBACK_FEATURES = [
-  { title: "Feedback", description: "Capture and review feedback for every engineer.", path: "/employee-feedback" },
-  { title: "Employee Skills", description: "Track skills and proficiency levels across the team.", path: "/employee-skills" },
+  { title: "Top N Match", description: "Find the best matches for your project.", path: "/top-n-match" },
+  { title: "Skill Match", description: "Match skills to project requirements.", path: "/gap-analysis" },
   { title: "AI Chatbot", description: "Ask questions and get AI-assisted answers.", path: "/chatbot" },
-  { title: "Demo Sandbox", description: "Full CRUD playground used to validate the layered setup.", path: "/demo" },
+  // { title: "Demo Sandbox", description: "Full CRUD playground used to validate the layered setup.", path: "/demo" },
 ];
 
 const FEATURE_ICONS = {
-  "/employee-feedback": <RateReviewIcon color="primary" />,
-  "/employee-skills": <WorkspacePremiumIcon color="primary" />,
-  "/chatbot": <ChatIcon color="primary" />,
-  "/demo": <ScienceIcon color="primary" />,
+  "/top-n-match": <RateReviewIcon color="primary" />,
+  "/gap-analysis": <WorkspacePremiumIcon color="primary" />,
+  "/chatbot": <ChatIcon color="primary" />,  
 };
 
 export default function WelcomePage() {

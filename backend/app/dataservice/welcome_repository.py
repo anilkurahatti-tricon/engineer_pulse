@@ -7,25 +7,25 @@ from app.models.welcome import FeatureHighlight
 
 _FEATURES: list[FeatureHighlight] = [
     FeatureHighlight(
-        title="Employee Feedback",
-        description="Capture and review feedback for every engineer.",
-        path="/employee-feedback",
+        title="Top N Match",
+        description="Find the best matches for your project.",
+        path="/top-n-match",
     ),
     FeatureHighlight(
-        title="Employee Skills",
-        description="Track skills and proficiency levels across the team.",
-        path="/employee-skills",
+        title="Skill Match",
+        description="Match skills to project requirements.",
+        path="/gap-analysis",
     ),
     FeatureHighlight(
         title="AI Chatbot",
         description="Ask questions and get AI-assisted answers (pluggable provider).",
         path="/chatbot",
     ),
-    FeatureHighlight(
-        title="Demo Sandbox",
-        description="Full CRUD playground used to validate the layered setup.",
-        path="/demo",
-    ),
+    # FeatureHighlight(
+    #     title="Demo Sandbox",
+    #     description="Full CRUD playground used to validate the layered setup.",
+    #     path="/demo",
+    # ),
 ]
 
 

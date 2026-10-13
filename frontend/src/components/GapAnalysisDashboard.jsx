@@ -174,7 +174,7 @@ export default function SkillMatchPage() {
         </div>
         {optionsError && <Alert severity="error">{optionsError}</Alert>}
         <div className="gap-selectors">
-          <FormControl fullWidth size="small" disabled={optionsLoading}>
+          <FormControl fullWidth size="small" disabled={optionsLoading}>  
             <InputLabel id="skill-match-employee-label">Employee</InputLabel>
             <Select
               labelId="skill-match-employee-label"
