@@ -15,8 +15,8 @@ export default function Footer() {
       }}
     >
       <Typography variant="body2" color="text.secondary">
-        Engineer Pulse · draft application
-      </Typography>
+        Engineer Pulse 
+              </Typography>
     </Box>
   );
 }
