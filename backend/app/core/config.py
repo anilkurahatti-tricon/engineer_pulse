@@ -48,7 +48,7 @@ class Settings(BaseSettings):
         )
 
     # AI framework configuration (populated from .env, empty by default)
-    ai_provider: str = "openai"  # openai | azure_openai | none
+    ai_provider: str = "openai"  # openai | azure_openai | groq | none
     openai_api_key: str | None = None
     openai_model: str = "gpt-4o-mini"
 
@@ -56,6 +56,13 @@ class Settings(BaseSettings):
     azure_openai_endpoint: str | None = None
     azure_openai_deployment: str | None = None
     azure_openai_api_version: str = "2024-02-15-preview"
+
+    # Groq (used for gap-analysis, top-n-match, and RAG chatbot)
+    groq_api_key: str | None = None
+    groq_model: str = "openai/gpt-oss-120b"
+
+    # Embedding model for RAG vector search
+    embedding_model: str = "text-embedding-3-small"  # openai embedding model
 
 
 @lru_cache

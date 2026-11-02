@@ -96,112 +96,385 @@ RAW_EMPLOYEES = [
         "total_experience_years": 5.5,
         "bio": "Manages Docker, Kubernetes clusters, and CI/CD pipelines at scale.",
     },
+    {
+        "name": "Meera Nair",
+        "email": "meera.nair@squad4.dev",
+        "title": "Cloud Solutions Architect",
+        "department": "Cloud Platform",
+        "total_experience_years": 8.0,
+        "bio": "Specializes in multi-region cloud migrations, AWS/Azure hybrid infrastructure, and Terraform IaC.",
+    },
+    {
+        "name": "David Chen",
+        "email": "david.chen@squad4.dev",
+        "title": "Senior .NET Engineer",
+        "department": "Enterprise Systems",
+        "total_experience_years": 6.5,
+        "bio": "Expert in ASP.NET Core, C#, Entity Framework, and modernizing legacy enterprise systems.",
+    },
+    {
+        "name": "Sara Khan",
+        "email": "sara.khan@squad4.dev",
+        "title": "Machine Learning Specialist",
+        "department": "AI Platform",
+        "total_experience_years": 4.5,
+        "bio": "Focuses on NLP, LLM fine-tuning, retrieval-augmented generation (RAG), and vector embeddings.",
+    },
+    {
+        "name": "Marcus Johnson",
+        "email": "marcus.johnson@squad4.dev",
+        "title": "Security & Compliance Lead",
+        "department": "InfoSec",
+        "total_experience_years": 5.5,
+        "bio": "Specializes in application security, OAuth2/OIDC, zero-trust architectures, and OWASP compliance.",
+    },
+    {
+        "name": "Elena Rostova",
+        "email": "elena.rostova@squad4.dev",
+        "title": "Senior Frontend Engineer",
+        "department": "UX Platform",
+        "total_experience_years": 5.0,
+        "bio": "Builds accessible design systems, micro-frontends, and high-performance React/TypeScript SPAs.",
+    },
+    {
+        "name": "Rohan Patel",
+        "email": "rohan.patel@squad4.dev",
+        "title": "Data Platform Engineer",
+        "department": "Data Engineering",
+        "total_experience_years": 6.0,
+        "bio": "Experienced in real-time data streaming with Apache Kafka, Spark, and data lake pipelines.",
+    },
+    {
+        "name": "Sophie Martin",
+        "email": "sophie.martin@squad4.dev",
+        "title": "Mobile Solutions Engineer",
+        "department": "Mobile Platform",
+        "total_experience_years": 4.0,
+        "bio": "Builds cross-platform React Native apps, offline sync mechanisms, and mobile CI/CD pipelines.",
+    },
+    {
+        "name": "Liam O'Connor",
+        "email": "liam.oconnor@squad4.dev",
+        "title": "Site Reliability Engineer",
+        "department": "Infrastructure",
+        "total_experience_years": 5.0,
+        "bio": "Expert in Kubernetes cluster operations, Prometheus/Grafana observability, and chaos engineering.",
+    },
+    {
+        "name": "Ananya Joshi",
+        "email": "ananya.joshi@squad4.dev",
+        "title": "QA Automation Lead",
+        "department": "Quality Engineering",
+        "total_experience_years": 4.5,
+        "bio": "Designs end-to-end test automation frameworks with Playwright, Cypress, and continuous testing.",
+    },
+    {
+        "name": "Tyler Brooks",
+        "email": "tyler.brooks@squad4.dev",
+        "title": "Distributed Systems Architect",
+        "department": "Core Platform",
+        "total_experience_years": 7.5,
+        "bio": "Architects low-latency distributed microservices in Go, gRPC, and Redis message queues.",
+    },
 ]
 
-# employee_id is assigned by insertion order (1-indexed matching RAW_EMPLOYEES)
+# employee_id is assigned dynamically based on employee_name
 RAW_EMPLOYEE_SKILLS = [
-    {
-        "employee_id": 1, "employee_name": "Jane Doe",
-        "skill_name": "Python & FastAPI", "proficiency_level": "Expert", "years_of_experience": 5.0,
-    },
-    {
-        "employee_id": 1, "employee_name": "Jane Doe",
-        "skill_name": "PostgreSQL", "proficiency_level": "Advanced", "years_of_experience": 3.5,
-    },
-    {
-        "employee_id": 2, "employee_name": "John Smith",
-        "skill_name": "React & Frontend Architecture", "proficiency_level": "Intermediate", "years_of_experience": 3.0,
-    },
-    {
-        "employee_id": 2, "employee_name": "John Smith",
-        "skill_name": "TypeScript", "proficiency_level": "Advanced", "years_of_experience": 2.5,
-    },
-    {
-        "employee_id": 3, "employee_name": "Alex Lee",
-        "skill_name": "FastAPI & Microservices", "proficiency_level": "Advanced", "years_of_experience": 4.0,
-    },
-    {
-        "employee_id": 4, "employee_name": "Priya Sharma",
-        "skill_name": "PostgreSQL & pgvector Search", "proficiency_level": "Expert", "years_of_experience": 4.0,
-    },
-    {
-        "employee_id": 4, "employee_name": "Priya Sharma",
-        "skill_name": "Machine Learning & Embeddings", "proficiency_level": "Advanced", "years_of_experience": 3.0,
-    },
-    {
-        "employee_id": 5, "employee_name": "Carlos Rodriguez",
-        "skill_name": "Docker, Kubernetes & CI/CD", "proficiency_level": "Intermediate", "years_of_experience": 3.5,
-    },
+    {"employee_name": "Jane Doe", "skill_name": "Python & FastAPI", "proficiency_level": "Expert", "years_of_experience": 5.0},
+    {"employee_name": "Jane Doe", "skill_name": "PostgreSQL", "proficiency_level": "Advanced", "years_of_experience": 3.5},
+    {"employee_name": "Jane Doe", "skill_name": "REST API design", "proficiency_level": "Expert", "years_of_experience": 5.5},
+    {"employee_name": "John Smith", "skill_name": "React & Frontend Architecture", "proficiency_level": "Intermediate", "years_of_experience": 3.0},
+    {"employee_name": "John Smith", "skill_name": "TypeScript", "proficiency_level": "Advanced", "years_of_experience": 2.5},
+    {"employee_name": "John Smith", "skill_name": "Material UI & Styling", "proficiency_level": "Advanced", "years_of_experience": 3.5},
+    {"employee_name": "Alex Lee", "skill_name": "FastAPI & Microservices", "proficiency_level": "Advanced", "years_of_experience": 4.0},
+    {"employee_name": "Alex Lee", "skill_name": "React & State Management", "proficiency_level": "Intermediate", "years_of_experience": 3.0},
+    {"employee_name": "Priya Sharma", "skill_name": "PostgreSQL & pgvector Search", "proficiency_level": "Expert", "years_of_experience": 4.0},
+    {"employee_name": "Priya Sharma", "skill_name": "Machine Learning & Embeddings", "proficiency_level": "Advanced", "years_of_experience": 3.0},
+    {"employee_name": "Priya Sharma", "skill_name": "Python & Data Science", "proficiency_level": "Expert", "years_of_experience": 6.0},
+    {"employee_name": "Carlos Rodriguez", "skill_name": "Docker, Kubernetes & CI/CD", "proficiency_level": "Intermediate", "years_of_experience": 3.5},
+    {"employee_name": "Carlos Rodriguez", "skill_name": "Azure DevOps & GitHub Actions", "proficiency_level": "Advanced", "years_of_experience": 4.0},
+    {"employee_name": "Meera Nair", "skill_name": "AWS Cloud Architecture", "proficiency_level": "Expert", "years_of_experience": 6.0},
+    {"employee_name": "Meera Nair", "skill_name": "Terraform (IaC)", "proficiency_level": "Advanced", "years_of_experience": 4.5},
+    {"employee_name": "Meera Nair", "skill_name": "Kubernetes", "proficiency_level": "Advanced", "years_of_experience": 4.0},
+    {"employee_name": "David Chen", "skill_name": "ASP.NET Core Web API", "proficiency_level": "Expert", "years_of_experience": 6.0},
+    {"employee_name": "David Chen", "skill_name": "C# & .NET 8", "proficiency_level": "Expert", "years_of_experience": 6.5},
+    {"employee_name": "David Chen", "skill_name": "SQL Server & Entity Framework Core", "proficiency_level": "Advanced", "years_of_experience": 5.0},
+    {"employee_name": "Sara Khan", "skill_name": "Python & PyTorch", "proficiency_level": "Advanced", "years_of_experience": 4.0},
+    {"employee_name": "Sara Khan", "skill_name": "Vector Databases & RAG", "proficiency_level": "Expert", "years_of_experience": 3.5},
+    {"employee_name": "Sara Khan", "skill_name": "Natural Language Processing", "proficiency_level": "Advanced", "years_of_experience": 3.0},
+    {"employee_name": "Marcus Johnson", "skill_name": "OAuth2 / OpenID Connect", "proficiency_level": "Expert", "years_of_experience": 5.0},
+    {"employee_name": "Marcus Johnson", "skill_name": "OWASP Security & Penetration Testing", "proficiency_level": "Advanced", "years_of_experience": 4.0},
+    {"employee_name": "Marcus Johnson", "skill_name": "JWT Authentication", "proficiency_level": "Expert", "years_of_experience": 4.5},
+    {"employee_name": "Elena Rostova", "skill_name": "React & Modern Hooks", "proficiency_level": "Expert", "years_of_experience": 5.0},
+    {"employee_name": "Elena Rostova", "skill_name": "TypeScript", "proficiency_level": "Expert", "years_of_experience": 4.5},
+    {"employee_name": "Elena Rostova", "skill_name": "Web Performance Optimization", "proficiency_level": "Advanced", "years_of_experience": 3.5},
+    {"employee_name": "Rohan Patel", "skill_name": "Apache Kafka & Event Streaming", "proficiency_level": "Expert", "years_of_experience": 5.0},
+    {"employee_name": "Rohan Patel", "skill_name": "Apache Spark & Data Pipelines", "proficiency_level": "Advanced", "years_of_experience": 4.0},
+    {"employee_name": "Rohan Patel", "skill_name": "PostgreSQL", "proficiency_level": "Advanced", "years_of_experience": 4.5},
+    {"employee_name": "Sophie Martin", "skill_name": "React Native", "proficiency_level": "Expert", "years_of_experience": 4.0},
+    {"employee_name": "Sophie Martin", "skill_name": "GraphQL", "proficiency_level": "Advanced", "years_of_experience": 3.0},
+    {"employee_name": "Liam O'Connor", "skill_name": "Kubernetes & Container Orchestration", "proficiency_level": "Expert", "years_of_experience": 4.5},
+    {"employee_name": "Liam O'Connor", "skill_name": "Prometheus & Grafana Observability", "proficiency_level": "Advanced", "years_of_experience": 3.5},
+    {"employee_name": "Ananya Joshi", "skill_name": "Playwright & Cypress Testing", "proficiency_level": "Expert", "years_of_experience": 4.0},
+    {"employee_name": "Ananya Joshi", "skill_name": "CI/CD Test Automation", "proficiency_level": "Advanced", "years_of_experience": 3.5},
+    {"employee_name": "Tyler Brooks", "skill_name": "Go (Golang)", "proficiency_level": "Expert", "years_of_experience": 5.5},
+    {"employee_name": "Tyler Brooks", "skill_name": "gRPC & Protobuf", "proficiency_level": "Advanced", "years_of_experience": 4.0},
+    {"employee_name": "Tyler Brooks", "skill_name": "Redis caching & Messaging", "proficiency_level": "Expert", "years_of_experience": 5.0},
 ]
 
 RAW_EMPLOYEE_PROJECTS = [
     {
-        "employee_id": 1, "employee_name": "Jane Doe",
-        "project_name": "Engineer Pulse API", "role": "Lead Backend Architect",
+        "employee_name": "Jane Doe",
+        "project_name": "Engineer Pulse API",
+        "role": "Lead Backend Architect",
         "technologies": "FastAPI, PostgreSQL, pgvector, Docker",
         "description": "Designed and built the entire FastAPI backend with layered architecture and AI-powered search.",
         "duration_months": 6,
     },
     {
-        "employee_id": 2, "employee_name": "John Smith",
-        "project_name": "Engineer Pulse Frontend", "role": "UI Developer",
+        "employee_name": "John Smith",
+        "project_name": "Engineer Pulse Frontend",
+        "role": "UI Developer",
         "technologies": "React, Vite, Material UI, Recharts",
         "description": "Built the React frontend including dashboard charts, feedback forms, and chatbot interface.",
         "duration_months": 6,
     },
     {
-        "employee_id": 3, "employee_name": "Alex Lee",
-        "project_name": "Chatbot Integration", "role": "Full-Stack Engineer",
+        "employee_name": "Alex Lee",
+        "project_name": "Chatbot Integration",
+        "role": "Full-Stack Engineer",
         "technologies": "FastAPI, React, OpenAI API",
         "description": "Integrated Azure OpenAI chatbot backend with streaming support and session-based chat history.",
         "duration_months": 3,
     },
     {
-        "employee_id": 4, "employee_name": "Priya Sharma",
-        "project_name": "pgvector Semantic Search Engine", "role": "AI/ML Engineer",
+        "employee_name": "Priya Sharma",
+        "project_name": "pgvector Semantic Search Engine",
+        "role": "AI/ML Engineer",
         "technologies": "PostgreSQL, pgvector, Python, OpenAI Embeddings",
         "description": "Designed the vector embedding pipeline and HNSW index strategy for sub-100ms cosine search.",
         "duration_months": 4,
     },
     {
-        "employee_id": 5, "employee_name": "Carlos Rodriguez",
-        "project_name": "DevOps Pipeline & Docker Setup", "role": "Infrastructure Lead",
+        "employee_name": "Carlos Rodriguez",
+        "project_name": "DevOps Pipeline & Docker Setup",
+        "role": "Infrastructure Lead",
         "technologies": "Docker Compose, GitHub Actions, Azure DevOps",
         "description": "Set up Docker Compose for local development and CI/CD pipelines for automated testing and deployment.",
         "duration_months": 2,
+    },
+    {
+        "employee_name": "David Chen",
+        "project_name": "Customer Portal Modernization",
+        "role": "Lead Application Architect",
+        "technologies": "ASP.NET Core Web API, REST API design, Angular, SQL Server, Docker, Azure App Service",
+        "description": "Rebuild legacy customer portal as an ASP.NET Core Web API backend with a high-performance REST API layer and modern single-page frontend.",
+        "duration_months": 8,
+    },
+    {
+        "employee_name": "Tyler Brooks",
+        "project_name": "Inventory Management Microservices Platform",
+        "role": "Distributed Systems Lead",
+        "technologies": ".NET Microservices, RabbitMQ, Docker, Kubernetes, gRPC, PostgreSQL, React",
+        "description": "Distributed inventory management architecture built with resilient event-driven microservices communicating over RabbitMQ queues.",
+        "duration_months": 7,
+    },
+    {
+        "employee_name": "Rohan Patel",
+        "project_name": "Real-Time Event Streaming Pipeline",
+        "role": "Data Streaming Architect",
+        "technologies": "Apache Kafka, Python, PostgreSQL, Docker, Redis",
+        "description": "Engineered real-time telemetry streaming backbone processing over 50,000 sensor and system telemetry messages per second.",
+        "duration_months": 6,
+    },
+    {
+        "employee_name": "Meera Nair",
+        "project_name": "Cloud Migration & Multi-Region Kubernetes",
+        "role": "Cloud Solutions Architect",
+        "technologies": "AWS, Kubernetes, Terraform (IaC), Prometheus & Grafana, CI/CD",
+        "description": "Led zero-downtime migration of multi-tier applications to AWS multi-region EKS clusters provisioned with automated Terraform infrastructure.",
+        "duration_months": 9,
+    },
+    {
+        "employee_name": "Sophie Martin",
+        "project_name": "Field Service Mobile App Backend",
+        "role": "Mobile Backend Lead",
+        "technologies": "React Native, GraphQL, Azure Functions, OAuth2, Azure SQL",
+        "description": "Developed resilient offline-first mobile sync backend serving thousands of field engineers with bi-directional conflict resolution.",
+        "duration_months": 5,
+    },
+    {
+        "employee_name": "Marcus Johnson",
+        "project_name": "Enterprise Identity & Zero Trust Access Gate",
+        "role": "Security Lead",
+        "technologies": "OAuth2 / OpenID Connect, JWT Authentication, FastAPI, Redis, OWASP Security",
+        "description": "Centralized company-wide authentication and authorization gateway enforcing strict OAuth2 protocols and role-based policies.",
+        "duration_months": 6,
+    },
+    {
+        "employee_name": "Ananya Joshi",
+        "project_name": "Automated End-to-End Testing Suite",
+        "role": "Test Automation Architect",
+        "technologies": "Playwright & Cypress Testing, PyTest, GitHub Actions, Docker",
+        "description": "Architected unified cross-browser and regression test automation suite running parallelized runs in CI/CD pipelines.",
+        "duration_months": 4,
+    },
+    {
+        "employee_name": "Sara Khan",
+        "project_name": "Autonomous RAG Knowledge Assistant",
+        "role": "AI Application Engineer",
+        "technologies": "Python, LangChain, PyTorch, Vector Databases, OpenAI Embeddings, FastAPI",
+        "description": "Implemented enterprise RAG search system indexing codebase repositories and technical handbooks with hybrid vector retrieval.",
+        "duration_months": 5,
+    },
+    {
+        "employee_name": "Tyler Brooks",
+        "project_name": "High-Speed Market Data Ingestion Engine",
+        "role": "Systems Architect",
+        "technologies": "Go (Golang), gRPC, Redis, Docker, PostgreSQL",
+        "description": "Low-latency ingestion daemon ingesting live financial order books with sub-millisecond gRPC processing and Redis buffering.",
+        "duration_months": 6,
+    },
+    {
+        "employee_name": "Elena Rostova",
+        "project_name": "Design System & Accessible Component Library",
+        "role": "Lead Frontend Designer",
+        "technologies": "React, TypeScript, Material UI & Styling, Web Performance Optimization",
+        "description": "Engineered enterprise design system adhering to WCAG 2.1 AA standards, consumed by 8 internal web applications.",
+        "duration_months": 6,
+    },
+    {
+        "employee_name": "Rohan Patel",
+        "project_name": "Data Warehouse & Analytics ETL Engine",
+        "role": "Data Pipeline Lead",
+        "technologies": "Apache Spark, Python, PostgreSQL, AWS Cloud Architecture",
+        "description": "Built distributed analytical ETL pipeline aggregating daily product usage metrics into optimized columnar data lakes.",
+        "duration_months": 5,
+    },
+    {
+        "employee_name": "Liam O'Connor",
+        "project_name": "Observability & Distributed Tracing Stack",
+        "role": "SRE Lead",
+        "technologies": "Kubernetes, Prometheus & Grafana Observability, Linux, Docker",
+        "description": "Standardized unified telemetry monitoring with OpenTelemetry, Prometheus metrics alerts, and Grafana interactive squad dashboards.",
+        "duration_months": 4,
+    },
+    {
+        "employee_name": "Elena Rostova",
+        "project_name": "Micro-Frontend Shell & Module Federation",
+        "role": "Frontend Architect",
+        "technologies": "React, TypeScript, Vite, Material UI & Styling",
+        "description": "Designed pluggable micro-frontend shell allowing autonomous squad deployments without coordinated application rollouts.",
+        "duration_months": 5,
+    },
+    {
+        "employee_name": "Jane Doe",
+        "project_name": "Scalable Asynchronous Job Queue",
+        "role": "Senior Backend Engineer",
+        "technologies": "Python & FastAPI, Redis caching & Messaging, Docker, PostgreSQL",
+        "description": "Asynchronous job scheduling worker pool processing long-running analytics jobs with distributed rate-limiting and auto-retries.",
+        "duration_months": 4,
+    },
+    {
+        "employee_name": "Priya Sharma",
+        "project_name": "Real-Time Feature Store for ML Models",
+        "role": "ML Platform Engineer",
+        "technologies": "PostgreSQL & pgvector Search, Python, Redis, Machine Learning & Embeddings",
+        "description": "Engineered low-latency feature serving store enabling production ML pipelines to retrieve precomputed and online embeddings.",
+        "duration_months": 5,
     },
 ]
 
 RAW_EMPLOYEE_FEEDBACK = [
     {
-        "employee_id": 1, "employee_name": "Jane Doe",
+        "employee_name": "Jane Doe",
         "reviewer_name": "Priya Sharma",
         "feedback_text": "Great collaboration on the sprint. Delivered async endpoints on schedule with excellent test coverage.",
         "rating": 5,
     },
     {
-        "employee_id": 2, "employee_name": "John Smith",
+        "employee_name": "John Smith",
         "reviewer_name": "Alex Lee",
         "feedback_text": "Needs to improve code review turnaround times and increase unit test coverage.",
         "rating": 3,
     },
     {
-        "employee_id": 3, "employee_name": "Alex Lee",
+        "employee_name": "Alex Lee",
         "reviewer_name": "Jane Doe",
         "feedback_text": "Consistently delivers high quality work and actively assists junior teammates.",
         "rating": 4,
     },
     {
-        "employee_id": 4, "employee_name": "Priya Sharma",
+        "employee_name": "Priya Sharma",
         "reviewer_name": "Carlos Rodriguez",
         "feedback_text": "Outstanding problem-solving skills, deep architectural mentorship, and database optimization insights.",
         "rating": 5,
     },
     {
-        "employee_id": 5, "employee_name": "Carlos Rodriguez",
+        "employee_name": "Carlos Rodriguez",
         "reviewer_name": "John Smith",
         "feedback_text": "Active participant in sprint retrospectives, very supportive teammate, and reliable on delivery.",
         "rating": 4,
+    },
+    {
+        "employee_name": "Meera Nair",
+        "reviewer_name": "Liam O'Connor",
+        "feedback_text": "Exceptional cloud architecture leadership. Successfully orchestrated our EKS migration without a single incident.",
+        "rating": 5,
+    },
+    {
+        "employee_name": "David Chen",
+        "reviewer_name": "Jane Doe",
+        "feedback_text": "Demonstrated deep .NET and SQL mastery. Refactored bottleneck query routines resulting in 4x speedup.",
+        "rating": 5,
+    },
+    {
+        "employee_name": "Sara Khan",
+        "reviewer_name": "Priya Sharma",
+        "feedback_text": "Superb RAG pipeline design. Vector retrieval accuracy exceeded squad expectations significantly.",
+        "rating": 5,
+    },
+    {
+        "employee_name": "Marcus Johnson",
+        "reviewer_name": "Meera Nair",
+        "feedback_text": "Thorough security audit and seamless OAuth2 migration. Highly communicative during the security transition.",
+        "rating": 4,
+    },
+    {
+        "employee_name": "Elena Rostova",
+        "reviewer_name": "John Smith",
+        "feedback_text": "Incredible eye for detail in UI accessibility and state management. Great mentor to junior frontend developers.",
+        "rating": 5,
+    },
+    {
+        "employee_name": "Rohan Patel",
+        "reviewer_name": "Tyler Brooks",
+        "feedback_text": "Robust Kafka cluster configuration and spotless stream consumer error handling.",
+        "rating": 4,
+    },
+    {
+        "employee_name": "Sophie Martin",
+        "reviewer_name": "Elena Rostova",
+        "feedback_text": "Delivered mobile offline sync seamlessly ahead of time. Very proactive in addressing mobile edge cases.",
+        "rating": 5,
+    },
+    {
+        "employee_name": "Liam O'Connor",
+        "reviewer_name": "Carlos Rodriguez",
+        "feedback_text": "Drastically reduced alert fatigue with finely tuned Prometheus alert rules and clear runbooks.",
+        "rating": 4,
+    },
+    {
+        "employee_name": "Ananya Joshi",
+        "reviewer_name": "Alex Lee",
+        "feedback_text": "Transformed our regression testing cycle from 4 hours to 15 minutes with automated Playwright pipelines.",
+        "rating": 5,
+    },
+    {
+        "employee_name": "Tyler Brooks",
+        "reviewer_name": "David Chen",
+        "feedback_text": "Brilliant systems thinking and exceptional gRPC microservice throughput optimizations.",
+        "rating": 5,
     },
 ]
 
@@ -386,63 +659,104 @@ def create_tables_and_indexes(engine, force_recreate: bool = False) -> None:
 
 
 def push_seed_data(engine, settings) -> dict[str, int]:
-    """Insert raw seed data and generate vector embeddings for each text field."""
+    """Insert raw seed data and generate vector embeddings for each text field.
+    
+    Idempotent: Inserts missing records without duplicating existing data,
+    and dynamically resolves employee_id foreign keys from database records.
+    """
     stats: dict[str, int] = {}
 
     with Session(engine) as session:
 
         # 1. Employees (master profile — no embedding)
-        if session.query(EmployeeModel).count() == 0:
-            logger.info("Inserting employees...")
-            for row in RAW_EMPLOYEES:
+        existing_employees = session.query(EmployeeModel).all()
+        existing_emails = {e.email for e in existing_employees}
+        new_employees = [r for r in RAW_EMPLOYEES if r["email"] not in existing_emails]
+        if new_employees:
+            logger.info(f"Inserting {len(new_employees)} employees...")
+            for row in new_employees:
                 session.add(EmployeeModel(**row))
             session.flush()
-            stats["employees"] = len(RAW_EMPLOYEES)
-            logger.info(f"  ✅ {len(RAW_EMPLOYEES)} employees inserted")
+            stats["employees"] = len(new_employees)
+            logger.info(f"  ✅ {len(new_employees)} employees inserted")
         else:
-            logger.info("  ⏭️  Employees table already has data, skipping.")
+            logger.info("  ⏭️  All employees already exist in table, skipping.")
             stats["employees"] = 0
 
+        # Build dynamic lookup for employee_name -> employee_id from real DB IDs
+        all_employees = session.query(EmployeeModel).all()
+        emp_id_map = {e.name: e.id for e in all_employees}
+
         # 2. Employee Skills (embedding: skill_name + proficiency)
-        if session.query(EmployeeSkillModel).count() == 0:
-            logger.info("Inserting employee skills + embeddings...")
-            for row in RAW_EMPLOYEE_SKILLS:
+        existing_skills = {
+            (s.employee_name, s.skill_name)
+            for s in session.query(EmployeeSkillModel.employee_name, EmployeeSkillModel.skill_name).all()
+        }
+        new_skills = [
+            r for r in RAW_EMPLOYEE_SKILLS
+            if (r["employee_name"], r["skill_name"]) not in existing_skills
+        ]
+        if new_skills:
+            logger.info(f"Inserting {len(new_skills)} employee skills + embeddings...")
+            for row in new_skills:
+                emp_id = emp_id_map.get(row["employee_name"], 1)
+                skill_data = {**row, "employee_id": emp_id}
                 embed_text = f"{row['employee_name']} has {row['proficiency_level']} proficiency in {row['skill_name']} with {row['years_of_experience']} years experience."
                 embedding = get_embedding(embed_text, settings)
-                session.add(EmployeeSkillModel(**row, embedding=embedding))
+                session.add(EmployeeSkillModel(**skill_data, embedding=embedding))
             session.flush()
-            stats["skills"] = len(RAW_EMPLOYEE_SKILLS)
-            logger.info(f"  ✅ {len(RAW_EMPLOYEE_SKILLS)} skills inserted with embeddings")
+            stats["skills"] = len(new_skills)
+            logger.info(f"  ✅ {len(new_skills)} skills inserted with embeddings")
         else:
-            logger.info("  ⏭️  Skills table already has data, skipping.")
+            logger.info("  ⏭️  All skills already exist, skipping.")
             stats["skills"] = 0
 
         # 3. Employee Projects (embedding: role + description + technologies)
-        if session.query(EmployeeProjectModel).count() == 0:
-            logger.info("Inserting employee projects + embeddings...")
-            for row in RAW_EMPLOYEE_PROJECTS:
+        existing_projects = {
+            (p.employee_name, p.project_name)
+            for p in session.query(EmployeeProjectModel.employee_name, EmployeeProjectModel.project_name).all()
+        }
+        new_projects = [
+            r for r in RAW_EMPLOYEE_PROJECTS
+            if (r["employee_name"], r["project_name"]) not in existing_projects
+        ]
+        if new_projects:
+            logger.info(f"Inserting {len(new_projects)} employee projects + embeddings...")
+            for row in new_projects:
+                emp_id = emp_id_map.get(row["employee_name"], 1)
+                proj_data = {**row, "employee_id": emp_id}
                 embed_text = f"{row['employee_name']} worked as {row['role']} on {row['project_name']} using {row['technologies']}. {row['description']}"
                 embedding = get_embedding(embed_text, settings)
-                session.add(EmployeeProjectModel(**row, embedding=embedding))
+                session.add(EmployeeProjectModel(**proj_data, embedding=embedding))
             session.flush()
-            stats["projects"] = len(RAW_EMPLOYEE_PROJECTS)
-            logger.info(f"  ✅ {len(RAW_EMPLOYEE_PROJECTS)} projects inserted with embeddings")
+            stats["projects"] = len(new_projects)
+            logger.info(f"  ✅ {len(new_projects)} projects inserted with embeddings")
         else:
-            logger.info("  ⏭️  Projects table already has data, skipping.")
+            logger.info("  ⏭️  All projects already exist, skipping.")
             stats["projects"] = 0
 
         # 4. Employee Feedback (embedding: feedback_text)
-        if session.query(EmployeeFeedbackModel).count() == 0:
-            logger.info("Inserting employee feedback + embeddings...")
-            for row in RAW_EMPLOYEE_FEEDBACK:
+        existing_feedback = {
+            (f.employee_name, f.reviewer_name)
+            for f in session.query(EmployeeFeedbackModel.employee_name, EmployeeFeedbackModel.reviewer_name).all()
+        }
+        new_feedback = [
+            r for r in RAW_EMPLOYEE_FEEDBACK
+            if (r["employee_name"], r["reviewer_name"]) not in existing_feedback
+        ]
+        if new_feedback:
+            logger.info(f"Inserting {len(new_feedback)} employee feedback + embeddings...")
+            for row in new_feedback:
+                emp_id = emp_id_map.get(row["employee_name"], 1)
+                fb_data = {**row, "employee_id": emp_id}
                 embed_text = f"{row['reviewer_name']} reviewed {row['employee_name']}: {row['feedback_text']} (Rating: {row['rating']}/5)"
                 embedding = get_embedding(embed_text, settings)
-                session.add(EmployeeFeedbackModel(**row, embedding=embedding))
+                session.add(EmployeeFeedbackModel(**fb_data, embedding=embedding))
             session.flush()
-            stats["feedback"] = len(RAW_EMPLOYEE_FEEDBACK)
-            logger.info(f"  ✅ {len(RAW_EMPLOYEE_FEEDBACK)} feedback entries inserted with embeddings")
+            stats["feedback"] = len(new_feedback)
+            logger.info(f"  ✅ {len(new_feedback)} feedback entries inserted with embeddings")
         else:
-            logger.info("  ⏭️  Feedback table already has data, skipping.")
+            logger.info("  ⏭️  All feedback entries already exist, skipping.")
             stats["feedback"] = 0
 
         # 5. Chat Messages (no embedding)
@@ -458,17 +772,19 @@ def push_seed_data(engine, settings) -> dict[str, int]:
             stats["chat"] = 0
 
         # 6. Vector Documents (embedding: title + content)
-        if session.query(VectorDocumentModel).count() == 0:
-            logger.info("Inserting vector documents (RAG KB) + embeddings...")
-            for row in RAW_VECTOR_DOCUMENTS:
+        existing_docs = {d.title for d in session.query(VectorDocumentModel.title).all()}
+        new_docs = [r for r in RAW_VECTOR_DOCUMENTS if r["title"] not in existing_docs]
+        if new_docs:
+            logger.info(f"Inserting {len(new_docs)} vector documents (RAG KB) + embeddings...")
+            for row in new_docs:
                 embed_text = f"{row['title']}: {row['content']}"
                 embedding = get_embedding(embed_text, settings)
                 session.add(VectorDocumentModel(**row, embedding=embedding))
             session.flush()
-            stats["docs"] = len(RAW_VECTOR_DOCUMENTS)
-            logger.info(f"  ✅ {len(RAW_VECTOR_DOCUMENTS)} knowledge documents inserted with embeddings")
+            stats["docs"] = len(new_docs)
+            logger.info(f"  ✅ {len(new_docs)} knowledge documents inserted with embeddings")
         else:
-            logger.info("  ⏭️  Vector documents table already has data, skipping.")
+            logger.info("  ⏭️  Vector documents already exist, skipping.")
             stats["docs"] = 0
 
         # 7. Demo Items (no embedding)
@@ -480,7 +796,6 @@ def push_seed_data(engine, settings) -> dict[str, int]:
             stats["demo"] = 0
 
         session.commit()
-
     return stats
 
 

@@ -1,13 +1,17 @@
-"""Chatbot controller: chat history CRUD plus an AI-powered /ask endpoint.
+"""Chatbot controller: chat history CRUD plus a RAG-powered /ask endpoint.
 
-The `/ask` endpoint extracts AI provider configuration (API keys, model,
-endpoint) from environment settings via the `AIClient` dependency and
-processes the user's message through it.
+The ``/ask`` endpoint runs the full RAG loop:
+    User message → pgvector semantic search (vector_documents)
+                 → Groq LLM with context injected into system prompt
+                 → Grounded reply persisted and returned.
 """
 from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy.orm import Session
 
 from app.ai.ai_client import AIClient, get_ai_client
-from app.business.chatbot_service import ChatbotService, get_chatbot_service
+from app.business.chatbot_service import ChatbotService
+from app.core.database import get_db
+from app.dataservice.chatbot_repository import chatbot_repository
 from app.models.chatbot import (
     ChatAskRequest,
     ChatAskResponse,
@@ -19,7 +23,16 @@ from app.models.chatbot import (
 router = APIRouter(prefix="/api/chatbot", tags=["Chatbot"])
 
 
-@router.post("/ask", response_model=ChatAskResponse, summary="Send a message to the chatbot and get an AI reply")
+def get_chatbot_service(db: Session = Depends(get_db)) -> ChatbotService:
+    """FastAPI dependency: injects a real DB session into ChatbotService."""
+    return ChatbotService(chatbot_repository, db)
+
+
+@router.post(
+    "/ask",
+    response_model=ChatAskResponse,
+    summary="Send a message to the RAG-powered chatbot and get a grounded AI reply",
+)
 def ask_chatbot(
     payload: ChatAskRequest,
     service: ChatbotService = Depends(get_chatbot_service),

@@ -1,59 +1,159 @@
-"""AI integration layer.
+﻿"""AI integration layer - Groq-powered chatbot with optional RAG context injection.
 
-Pluggable client used by the chatbot (and future AI features). Reads provider
-configuration/API keys from environment variables via `app.core.config.Settings`.
-When no API key is configured the client falls back to a deterministic dummy
-response so the rest of the application can be developed/tested without
-real AI provider credentials.
+The AIClient is used by the chatbot service. When a list of RAG context
+documents is passed in, they are injected into the system prompt so the LLM
+answers are grounded in real project/employee knowledge rather than generic
+world knowledge.
+
+Provider resolution order (first available wins):
+    1. Groq  - if GROQ_API_KEY is set   (fast, free tier, already configured)
+    2. OpenAI - if OPENAI_API_KEY is set
+    3. Dummy  - deterministic echo, no credentials needed
 """
+from __future__ import annotations
+
+import logging
+import os
+
 from app.core.config import Settings, get_settings
 
+logger = logging.getLogger(__name__)
+
+# ---------------------------------------------------------------------------
+# System prompt template
+# ---------------------------------------------------------------------------
+_SYSTEM_PROMPT = """You are the Engineer Pulse AI Assistant - an intelligent HR and
+engineering talent analytics assistant for the Engineer Pulse platform.
+
+You help with:
+- Employee skill profiles, gaps, and strengths
+- Project assignments and technology requirements
+- Feedback summaries and performance insights
+- Upskilling roadmaps and career guidance
+
+Answer concisely and professionally. Base your answers on the CONTEXT provided
+when available. If the context does not contain enough information, say so
+honestly rather than guessing.
+
+{context_block}"""
+
+_NO_CONTEXT = "(No additional context retrieved - answer from general knowledge.)"
+
+
+def _build_system_prompt(context_docs: list[dict]) -> str:
+    if not context_docs:
+        return _SYSTEM_PROMPT.format(context_block=_NO_CONTEXT)
+    blocks = []
+    for doc in context_docs:
+        blocks.append(
+            "[{cat}] {title}\n{content}".format(
+                cat=doc.get("category", "info").upper(),
+                title=doc.get("title", ""),
+                content=doc.get("content", ""),
+            )
+        )
+    context_block = "CONTEXT (retrieved from the knowledge base):\n" + "\n\n".join(blocks)
+    return _SYSTEM_PROMPT.format(context_block=context_block)
+
+
+# ---------------------------------------------------------------------------
+# AIClient
+# ---------------------------------------------------------------------------
 
 class AIClient:
-    """Thin wrapper around configured AI providers (OpenAI, Azure OpenAI, ...).
-
-    Extraction of provider settings happens here so controllers only deal with
-    plain request/response objects and never touch raw environment variables.
-    """
+    """Pluggable AI client that routes to Groq, OpenAI, or a dummy echo."""
 
     def __init__(self, settings: Settings) -> None:
         self._settings = settings
 
     @property
     def provider(self) -> str:
-        return self._settings.ai_provider
+        # Report which provider will actually be used
+        if os.getenv("GROQ_API_KEY") or self._settings.groq_api_key:
+            return "groq"
+        if self._settings.openai_api_key:
+            return "openai"
+        return "dummy"
 
-    def _has_real_credentials(self) -> bool:
-        if self._settings.ai_provider == "openai":
-            return bool(self._settings.openai_api_key)
-        if self._settings.ai_provider == "azure_openai":
-            return bool(self._settings.azure_openai_api_key and self._settings.azure_openai_endpoint)
-        return False
+    # ------------------------------------------------------------------
+    # Public interface
+    # ------------------------------------------------------------------
 
-    def generate_response(self, prompt: str) -> tuple[str, bool]:
+    def generate_response(
+        self,
+        prompt: str,
+        context_docs: list[dict] | None = None,
+    ) -> tuple[str, bool]:
         """Return (reply, is_dummy_response).
 
-        Real provider calls (OpenAI/Azure OpenAI SDK) should be implemented in
-        the branches below once API keys are supplied via `.env`.
+        Args:
+            prompt:       The user's message.
+            context_docs: RAG documents retrieved for this query. When
+                          provided they are injected into the system prompt.
         """
-        if not self._has_real_credentials():
-            return (
-                f"[dummy-response] Echoing your message since no {self._settings.ai_provider} "
-                f"API key is configured: '{prompt}'",
-                True,
+        docs = context_docs or []
+        system_prompt = _build_system_prompt(docs)
+
+        # -- Groq (preferred - already configured in .env) --
+        groq_key = os.getenv("GROQ_API_KEY") or self._settings.groq_api_key
+        if groq_key:
+            return self._call_groq(groq_key, system_prompt, prompt)
+
+        # -- OpenAI --
+        if self._settings.openai_api_key:
+            return self._call_openai(system_prompt, prompt)
+
+        # -- Dummy fallback --
+        return (
+            "[dummy] No AI key configured. You asked: '{p}'".format(p=prompt),
+            True,
+        )
+
+    # ------------------------------------------------------------------
+    # Provider implementations
+    # ------------------------------------------------------------------
+
+    def _call_groq(
+        self, api_key: str, system_prompt: str, user_message: str
+    ) -> tuple[str, bool]:
+        try:
+            from groq import Groq  # type: ignore
+            client = Groq(api_key=api_key)
+            completion = client.chat.completions.create(
+                model=self._settings.groq_model,
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user",   "content": user_message},
+                ],
+                temperature=0.4,
+                max_tokens=1024,
             )
+            reply = completion.choices[0].message.content or ""
+            return reply.strip(), False
+        except Exception as exc:
+            logger.error("Groq API error: %s", exc)
+            return "[groq-error] {e}".format(e=exc), True
 
-        if self._settings.ai_provider == "openai":
-            # TODO: call OpenAI SDK using self._settings.openai_api_key / openai_model
-            return f"[openai:{self._settings.openai_model}] {prompt}", False
-
-        if self._settings.ai_provider == "azure_openai":
-            # TODO: call Azure OpenAI SDK using self._settings.azure_openai_* fields
-            return f"[azure_openai:{self._settings.azure_openai_deployment}] {prompt}", False
-
-        return "AI provider not supported.", True
+    def _call_openai(self, system_prompt: str, user_message: str) -> tuple[str, bool]:
+        try:
+            from openai import OpenAI  # type: ignore
+            client = OpenAI(api_key=self._settings.openai_api_key)
+            completion = client.chat.completions.create(
+                model=self._settings.openai_model,
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user",   "content": user_message},
+                ],
+                temperature=0.4,
+                max_tokens=1024,
+            )
+            reply = completion.choices[0].message.content or ""
+            return reply.strip(), False
+        except Exception as exc:
+            logger.error("OpenAI API error: %s", exc)
+            return "[openai-error] {e}".format(e=exc), True
 
 
 def get_ai_client() -> AIClient:
-    """FastAPI dependency factory for `AIClient`."""
+    """FastAPI dependency factory for AIClient."""
     return AIClient(get_settings())
