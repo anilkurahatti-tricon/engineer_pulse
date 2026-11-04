@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import AppBackground from "./components/AppBackground";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import WelcomePage from "./pages/WelcomePage";
@@ -13,6 +14,7 @@ import { TopNMatchPage } from "./top_n_match";
 function App() {
   return (
     <BrowserRouter>
+      <AppBackground />
       <Box sx={{ minHeight: "100svh", display: "flex", flexDirection: "column" }}>
         <NavBar />
         <Box component="main" sx={{ flex: 1, maxWidth: 1200, mx: "auto", px: 2, py: 4, width: "100%" }}>
